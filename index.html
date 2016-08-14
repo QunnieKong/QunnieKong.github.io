@@ -53,7 +53,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qunniekong.github.io"></form>
@@ -63,6 +63,49 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Mobile-Web-Develope2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/14/Mobile-Web-Develope2/" class="article-date">
+  <time datetime="2016-08-14T12:48:53.000Z" itemprop="datePublished">2016-08-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/14/Mobile-Web-Develope2/">Mobile-Web-Develope2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>总结一下最近遇到的问题：<br><em>布局方面：<br><strong>margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；
+</strong>并不是所有手机都支持vw和vh单位（比如魅族M1）<br><strong>em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad
+</strong>inline-block自动产生的间隙可用display：table解决（目前还没找到适合强迫症的看起来不投机取巧的解决方法，负margin的方法亲测无用不知为何）<br>**锚点跳转时若存在fixed导航条时则跳转结果有微妙差别，我在知乎上提了问然而并没有人解答原因<a href="https://www.zhihu.com/question/49239482?from=profile_question_card" target="_blank" rel="external">知乎问题</a>。
+</em>其他方面：<br>**希望后台接口有详细的说明文档</p>
+<p>啊暂时就想到以上这些，晚安吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cirumsx730003008lmoxzgt4d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Mobile-Web-Develope" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -107,62 +150,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cirumgkun0004q88lw96wr71r" class="article-share-link">Delen</a>
+      <a data-url="http://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cirumsx730004008lg369g6wk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发-响应式/">移动端开发 响应式</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hexo-Blog" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/09/Hexo-Blog/" class="article-date">
-  <time datetime="2016-07-09T08:07:53.000Z" itemprop="datePublished">2016-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/09/Hexo-Blog/">Hexo Blog</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>想实现一个博客的原因是看到了这个项目–&gt;<a href="https://github.com/nswbmw/N-blog/wiki/%E7%AC%AC1%E7%AB%A0--%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%8D%9A%E5%AE%A2" target="_blank" rel="external">一个简单的博客</a>是用Node.js+Express+MongoDB实现的有登录功能的博客，缺点就是界面过于简单了。<br>我想到个人博客的内容并不多，这个登录功能像是完全为了学习MongoDB才硬加上去的，那么有没有界面好看又不用连接数据库的简单的个人博客，于是发现了以下几种：</p>
-<ul>
-<li>Webpress</li>
-<li>JekyII + Github pages</li>
-<li>Hexo + Github pages</li>
-</ul>
-<p>然后因为JekyII基于Ruby我的电脑并没有装Ruby，而用到github pages的话气氛上是更适合程序员的感觉于是就选择了Hexo。</p>
-<p>步骤比较简单，但还是花费了一下午时间，现在总结如下：<br>利用Hexo + Gitpages建立blog拢共分三步：</p>
-<ol>
-<li>各种下载 Node.js,Git</li>
-<li>建立/username.github.io/仓库</li>
-<li>部署Hexo</li>
-</ol>
-<p>然后就可以写文章啦，需要使用Markdown语法，很新鲜，挺有意思。<br>目前就做到这，更加深入的研究使用留在日后再说吧。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cirumgktj0000q88lvksy1kz7" class="article-share-link">Delen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git相关/">Git相关</a></li></ul>
 
     </footer>
   </div>
@@ -214,7 +205,59 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cirumgktq0001q88lum571t58" class="article-share-link">Delen</a>
+      <a data-url="http://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cirumsx6o0000008l9jk0dm0a" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git相关/">Git相关</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hexo-Blog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/09/Hexo-Blog/" class="article-date">
+  <time datetime="2016-07-09T08:07:53.000Z" itemprop="datePublished">2016-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/09/Hexo-Blog/">Hexo Blog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>想实现一个博客的原因是看到了这个项目–&gt;<a href="https://github.com/nswbmw/N-blog/wiki/%E7%AC%AC1%E7%AB%A0--%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%8D%9A%E5%AE%A2" target="_blank" rel="external">一个简单的博客</a>是用Node.js+Express+MongoDB实现的有登录功能的博客，缺点就是界面过于简单了。<br>我想到个人博客的内容并不多，这个登录功能像是完全为了学习MongoDB才硬加上去的，那么有没有界面好看又不用连接数据库的简单的个人博客，于是发现了以下几种：</p>
+<ul>
+<li>Webpress</li>
+<li>JekyII + Github pages</li>
+<li>Hexo + Github pages</li>
+</ul>
+<p>然后因为JekyII基于Ruby我的电脑并没有装Ruby，而用到github pages的话气氛上是更适合程序员的感觉于是就选择了Hexo。</p>
+<p>步骤比较简单，但还是花费了一下午时间，现在总结如下：<br>利用Hexo + Gitpages建立blog拢共分三步：</p>
+<ol>
+<li>各种下载 Node.js,Git</li>
+<li>建立/username.github.io/仓库</li>
+<li>部署Hexo</li>
+</ol>
+<p>然后就可以写文章啦，需要使用Markdown语法，很新鲜，挺有意思。<br>目前就做到这，更加深入的研究使用留在日后再说吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cirumsx6o0001008lw9o18oni" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git相关/">Git相关</a></li></ul>
@@ -261,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qunniekong.github.io/2016/07/09/hello-world/" data-id="cirumgkuk0003q88lvkkfsx0q" class="article-share-link">Delen</a>
+      <a data-url="http://qunniekong.github.io/2016/07/09/hello-world/" data-id="cirumsx7k0006008lxt4vzm4j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -281,9 +324,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git相关/">Git相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发-响应式/">移动端开发 响应式</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git相关/">Git相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发-响应式/">移动端开发 响应式</a></li></ul>
     </div>
   </div>
 
@@ -293,16 +336,16 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Git相关/" style="font-size: 20px;">Git相关</a> <a href="/tags/移动端开发-响应式/" style="font-size: 10px;">移动端开发 响应式</a>
+      <a href="/tags/Git相关/" style="font-size: 20px;">Git相关</a> <a href="/tags/移动端开发/" style="font-size: 10px;">移动端开发</a> <a href="/tags/移动端开发-响应式/" style="font-size: 10px;">移动端开发 响应式</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
     </div>
   </div>
 
@@ -310,20 +353,24 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/08/14/Mobile-Web-Develope2/">Mobile-Web-Develope2</a>
+          </li>
         
           <li>
             <a href="/2016/07/27/Mobile-Web-Develope/">Mobile-Web-Develope</a>
           </li>
         
           <li>
-            <a href="/2016/07/09/Hexo-Blog/">Hexo Blog</a>
+            <a href="/2016/07/09/Deploy-Blog/">Deploy Blog</a>
           </li>
         
           <li>
-            <a href="/2016/07/09/Deploy-Blog/">Deploy Blog</a>
+            <a href="/2016/07/09/Hexo-Blog/">Hexo Blog</a>
           </li>
         
           <li>
