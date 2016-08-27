@@ -5,22 +5,28 @@
   
   <title>Mobile-Web-Develope2 | KDQ&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="总结一下最近遇到的问题：布局方面：margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；
-并不是所有手机都支持vw和vh单位（比如魅族M1）em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad
-inline-block自动产生的间隙可用display：table解决（目">
+  <meta name="description" content="总结一下最近遇到的问题：
+布局方面：
+margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比；
+并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem
+em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mobile-Web-Develope2">
 <meta property="og:url" content="http://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/index.html">
 <meta property="og:site_name" content="KDQ's Blog">
-<meta property="og:description" content="总结一下最近遇到的问题：布局方面：margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；
-并不是所有手机都支持vw和vh单位（比如魅族M1）em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad
-inline-block自动产生的间隙可用display：table解决（目">
-<meta property="og:updated_time" content="2016-08-14T12:57:24.075Z">
+<meta property="og:description" content="总结一下最近遇到的问题：
+布局方面：
+margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比；
+并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem
+em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机">
+<meta property="og:updated_time" content="2016-08-27T03:23:36.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mobile-Web-Develope2">
-<meta name="twitter:description" content="总结一下最近遇到的问题：布局方面：margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；
-并不是所有手机都支持vw和vh单位（比如魅族M1）em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad
-inline-block自动产生的间隙可用display：table解决（目">
+<meta name="twitter:description" content="总结一下最近遇到的问题：
+布局方面：
+margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比；
+并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem
+em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机">
   
     <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
   
@@ -91,16 +97,25 @@ inline-block自动产生的间隙可用display：table解决（目">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>总结一下最近遇到的问题：<br><em>布局方面：<br><strong>margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；
-</strong>并不是所有手机都支持vw和vh单位（比如魅族M1）<br><strong>em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad
-</strong>inline-block自动产生的间隙可用display：table解决（目前还没找到适合强迫症的看起来不投机取巧的解决方法，负margin的方法亲测无用不知为何）<br>**锚点跳转时若存在fixed导航条时则跳转结果有微妙差别，我在知乎上提了问然而并没有人解答原因<a href="https://www.zhihu.com/question/49239482?from=profile_question_card" target="_blank" rel="external">知乎问题</a>。
-</em>其他方面：<br>**希望后台接口有详细的说明文档</p>
+        <p>总结一下最近遇到的问题：</p>
+<h2 id="布局方面："><a href="#布局方面：" class="headerlink" title="布局方面："></a>布局方面：</h2><ul>
+<li>margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比；</li>
+<li>并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem</li>
+<li>em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad ===》解决方案：flexible.js，字体px</li>
+<li>inline-block自动产生的间隙可用display：table解决（目前还没找到适合强迫症的看起来不投机取巧的解决方法，负margin的方法亲测无用不知为何）</li>
+<li>当input的type属性为search时，手机上会自动出现一个难看的‘X’作为清空按钮 ===》解决方案：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">input[type=&apos;search&apos;]::-webkit-search-decoration, </div><div class="line">input[type=&apos;search&apos;]::-webkit-search-cancel-button, </div><div class="line">input[type=&apos;search&apos;]::-webkit-search-results-button, </div><div class="line">input[type=&apos;search&apos;]::-webkit-search-results-decoration &#123;</div><div class="line">    display: none;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="其他方面："><a href="#其他方面：" class="headerlink" title="其他方面："></a>其他方面：</h2><ul>
+<li>input的placeholder在某些手机浏览器上垂直不居中，stackoverflow上有相关提问，提出的解决方案多种多样，然而我并没有找到真正有效的，可能是魅族自带浏览器比较奇葩吧。附stackoverflow<a href="http://stackoverflow.com/questions/4919680/html5-placeholder-css-padding" target="_blank" rel="external">相关讨论</a>地址。</li>
+<li>锚点跳转时若存在fixed导航条时则跳转结果有微妙差别，知乎上有人回答了==》<a href="https://www.zhihu.com/question/49239482?from=profile_question_card" target="_blank" rel="external">知乎问题</a></li>
+</ul>
 <p>啊暂时就想到以上这些，晚安吧。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cirumsx730003008lmoxzgt4d" class="article-share-link">Share</a>
+      <a data-url="http://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="ciscmiye60004mg8l6ombdg2z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
