@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Mobile-Web-Develope2 | KDQ&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="总结一下最近遇到的问题： 布局方面： margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比； 并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机">
+<meta name="keywords" content="移动端开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mobile-Web-Develope2">
+<meta property="og:url" content="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/index.html">
+<meta property="og:site_name" content="KDQ&#39;s Blog">
+<meta property="og:description" content="总结一下最近遇到的问题： 布局方面： margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比； 并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2017-11-24T01:43:21.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mobile-Web-Develope2">
+<meta name="twitter:description" content="总结一下最近遇到的问题： 布局方面： margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比； 并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机">
+  
+    <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KDQ&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://qunniekong.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mobile-Web-Develope2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/14/Mobile-Web-Develope2/" class="article-date">
+  <time datetime="2016-08-14T12:48:53.000Z" itemprop="datePublished">2016-08-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mobile-Web-Develope2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>总结一下最近遇到的问题：</p>
+<h2 id="布局方面："><a href="#布局方面：" class="headerlink" title="布局方面："></a>布局方面：</h2><ul>
+<li>margin是根据父元素width宽度计算百分比的，并不是垂直方向根据父元素高度水平方向根据父元素宽度；===》解决方案：尽量不用百分比；</li>
+<li>并不是所有手机都支持vw和vh单位（比如魅族M1）===》解决方案：不用vw和vh，vmin和vmax，改用rem</li>
+<li>em相比px更具有响应式特点，但em是相对值，而如果通篇用rem写布局会出现大屏手机整平内容过少或小屏手机整平内容过多的现象，sad ===》解决方案：flexible.js，字体px</li>
+<li>inline-block自动产生的间隙可用display：table解决（目前还没找到适合强迫症的看起来不投机取巧的解决方法，负margin的方法亲测无用不知为何）</li>
+<li>当input的type属性为search时，手机上会自动出现一个难看的‘X’作为清空按钮 ===》解决方案：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">input[type=&apos;search&apos;]::-webkit-search-decoration, </span><br><span class="line">input[type=&apos;search&apos;]::-webkit-search-cancel-button, </span><br><span class="line">input[type=&apos;search&apos;]::-webkit-search-results-button, </span><br><span class="line">input[type=&apos;search&apos;]::-webkit-search-results-decoration &#123;</span><br><span class="line">    display: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="其他方面："><a href="#其他方面：" class="headerlink" title="其他方面："></a>其他方面：</h2><ul>
+<li>input的placeholder在某些手机浏览器上垂直不居中，stackoverflow上有相关提问，提出的解决方案多种多样，然而我并没有找到真正有效的，可能是魅族自带浏览器比较奇葩吧。附stackoverflow<a href="http://stackoverflow.com/questions/4919680/html5-placeholder-css-padding" target="_blank" rel="noopener">相关讨论</a>地址。</li>
+<li>锚点跳转时若存在fixed导航条时则跳转结果有微妙差别，知乎上有人回答了==》<a href="https://www.zhihu.com/question/49239482?from=profile_question_card" target="_blank" rel="noopener">知乎问题</a></li>
+</ul>
+<p>啊暂时就想到以上这些，晚安吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cjhplox110005688ufg0zvrgm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/24/TensorFlow-Install/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TensorFlow Install
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/27/Mobile-Web-Develope/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mobile-Web-Develope</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 KDQ<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

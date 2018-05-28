@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Install OpenCV on Raspberry Pi | KDQ&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="树莓派上OpenCV的安装  想在树莓派上链接手机摄像头作为IP摄像头在树莓派上实现人脸识别，于是开始了漫长的OpenCV安装之路。  参考资料：  翻译 Python 2.7 和 Python 3+ 的OpenCV 3.0 安装教程 在树莓派B+上编译安装opencv 3.1.0 for both python Install guide: Raspberry Pi 3 + Raspbian J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install OpenCV on Raspberry Pi">
+<meta property="og:url" content="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/index.html">
+<meta property="og:site_name" content="KDQ&#39;s Blog">
+<meta property="og:description" content="树莓派上OpenCV的安装  想在树莓派上链接手机摄像头作为IP摄像头在树莓派上实现人脸识别，于是开始了漫长的OpenCV安装之路。  参考资料：  翻译 Python 2.7 和 Python 3+ 的OpenCV 3.0 安装教程 在树莓派B+上编译安装opencv 3.1.0 for both python Install guide: Raspberry Pi 3 + Raspbian J">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2017-12-29T01:48:10.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Install OpenCV on Raspberry Pi">
+<meta name="twitter:description" content="树莓派上OpenCV的安装  想在树莓派上链接手机摄像头作为IP摄像头在树莓派上实现人脸识别，于是开始了漫长的OpenCV安装之路。  参考资料：  翻译 Python 2.7 和 Python 3+ 的OpenCV 3.0 安装教程 在树莓派B+上编译安装opencv 3.1.0 for both python Install guide: Raspberry Pi 3 + Raspbian J">
+  
+    <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KDQ&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://qunniekong.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Install-OpenCV-on-Raspberry-Pi" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" class="article-date">
+  <time datetime="2017-12-26T09:45:46.000Z" itemprop="datePublished">2017-12-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Install OpenCV on Raspberry Pi
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="树莓派上OpenCV的安装"><a href="#树莓派上OpenCV的安装" class="headerlink" title="树莓派上OpenCV的安装"></a>树莓派上OpenCV的安装</h3><p>  想在树莓派上链接手机摄像头作为IP摄像头在树莓派上实现人脸识别，于是开始了漫长的OpenCV安装之路。<br>  参考资料：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/67293b547261" target="_blank" rel="noopener">翻译 Python 2.7 和 Python 3+ 的OpenCV 3.0 安装教程</a></li>
+<li><a href="http://blog.csdn.net/talkxin/article/details/50471986" target="_blank" rel="noopener">在树莓派B+上编译安装opencv 3.1.0 for both python</a></li>
+<li><a href="https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/" target="_blank" rel="noopener">Install guide: Raspberry Pi 3 + Raspbian Jessie + OpenCV 3</a></li>
+</ul>
+<h4 id="Rasberry-Pi-Python3-OpenCV-3-0-0"><a href="#Rasberry-Pi-Python3-OpenCV-3-0-0" class="headerlink" title="Rasberry Pi(Python3) + OpenCV 3.0.0"></a>Rasberry Pi(Python3) + OpenCV 3.0.0</h4><pre><code>sudo apt-get update
+sudo apt-get upgrade
+sudo rpi-update
+sudo apt-get install build-essential git cmake pkg-config
+sudo apt-get install libjpeg8-dev libtiff5-dev libjasper-dev libpng12-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install libgtk2.0-dev
+sudo apt-get install libatlas-base-dev gfortran
+cd ~
+git clone https://github.com/Itseez/opencv.git
+cd opencv
+git checkout 3.0.0
+cd ~
+git clone https://github.com/Itseez/opencv_contrib.git
+cd opencv_contrib
+git checkout 3.0.0
+sudo apt-get install python3-dev
+sudo python3 get-pip.py
+sudo pip3 install virtualenv virtualenvwrapper
+sudo rm -rf ~/.cache/pip
+nano ~/.profile
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+source ~/.profile
+mkvirtualenv p3cv
+workon p3cv
+pip3 install numpy
+# 若报没有权限的错误执行sudo rm -rf ~/.cache/pip/
+cd ~/opencv
+mkdir build 
+cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+-D CMAKE_INSTALL_PREFIX=/usr/local \
+-D INSTALL_C_EXAMPLES=OFF \
+-D INSTALL_PYTHON_EXAMPLES=ON \
+-D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+-D BUILD_EXAMPLES=ON ..
+# 检查python环境是否正常，ImportError：No module named cv2则检查.profile加入export LD_LIBRARY_PATH=/usr/lib/:$LD_LIBRARY_PATH
+make -j4
+sudo make install
+sudo ldconfig
+cd ~/.virtualenvs/p3cv/lib/python3.4/site-packages/
+ln -s /usr/local/lib/python3.4/site-packages/cv2.so cv2.so
+</code></pre><h4 id="有用的指令"><a href="#有用的指令" class="headerlink" title="有用的指令"></a>有用的指令</h4><ol>
+<li><p>更改管理员权限的密码：</p>
+<p> sudo passwd root<br> sudo passwd –unlock root</p>
+</li>
+<li><p>设置代理服务器<br> 1)打开profile文件</p>
+<pre><code>vi /etc/profile
+</code></pre><p> 2) 添加如下语句</p>
+<pre><code>http_proxy=1.1.1.1:8080
+no_proxy=10.2.44.44
+export http_proxy no_proxy
+</code></pre><p> 3) 打开文件指令为vi，打开后按insert键开始编辑，编辑完成按esc键输入:wq保存（或输入:q!不保存直接关闭），执行文件指令为source</p>
+<pre><code>source /etc/profile
+</code></pre></li>
+<li><p>进入虚拟环境</p>
+<p> source /usr/local/bin/virtualenvwrapper.sh<br> workon p3cv</p>
+</li>
+</ol>
+<h4 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h4><ol>
+<li>ImportError：No module named cv2:将cv2.so文件复制在各种文件夹内</li>
+<li>忘记是什么问题，解决方法是把ffe…的文件复制到python文件夹内</li>
+<li>目前仍然没有解决的问题是树莓派无法连接公司的代理服务器上外网</li>
+<li>环境变量配置不成功，每次需要手动进入虚拟环境</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="cjhplox0y0003688un6lfe2tr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/02/SSH-for-Windows/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SSH for Windows
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/13/Tensorflow-Install-With-Anaconda/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tensorflow install with Anaconda</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 KDQ<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

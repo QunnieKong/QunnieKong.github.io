@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>TensorFlow Install | KDQ&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Tensor Flow安装步骤 安装python3.5（一开始装成3.6了，装完了才发现tensorflow目前只支持到3.5） 安装pip：python -m ensurepip 解决pip -v报错: 到scripts文件夹查看pip的文件名，发现应为pip3.5，因此到cmd pip3.5 -v成功 下载tensorflow 依赖包安装顺序： Wheel&amp;gt;=0.26 Numpy&amp;gt;">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow Install">
+<meta property="og:url" content="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/index.html">
+<meta property="og:site_name" content="KDQ&#39;s Blog">
+<meta property="og:description" content="Tensor Flow安装步骤 安装python3.5（一开始装成3.6了，装完了才发现tensorflow目前只支持到3.5） 安装pip：python -m ensurepip 解决pip -v报错: 到scripts文件夹查看pip的文件名，发现应为pip3.5，因此到cmd pip3.5 -v成功 下载tensorflow 依赖包安装顺序： Wheel&amp;gt;=0.26 Numpy&amp;gt;">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2017-12-11T01:47:23.844Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow Install">
+<meta name="twitter:description" content="Tensor Flow安装步骤 安装python3.5（一开始装成3.6了，装完了才发现tensorflow目前只支持到3.5） 安装pip：python -m ensurepip 解决pip -v报错: 到scripts文件夹查看pip的文件名，发现应为pip3.5，因此到cmd pip3.5 -v成功 下载tensorflow 依赖包安装顺序： Wheel&amp;gt;=0.26 Numpy&amp;gt;">
+  
+    <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KDQ&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://qunniekong.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TensorFlow-Install" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/24/TensorFlow-Install/" class="article-date">
+  <time datetime="2017-11-24T01:45:32.000Z" itemprop="datePublished">2017-11-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TensorFlow Install
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Tensor-Flow安装步骤"><a href="#Tensor-Flow安装步骤" class="headerlink" title="Tensor Flow安装步骤"></a>Tensor Flow安装步骤</h3><ol>
+<li>安装python3.5（一开始装成3.6了，装完了才发现tensorflow目前只支持到3.5）</li>
+<li>安装pip：python -m ensurepip</li>
+<li>解决pip -v报错: 到scripts文件夹查看pip的文件名，发现应为pip3.5，因此到cmd pip3.5 -v成功</li>
+<li>下载<a href="https://pypi.python.org/pypi/tensorflow/1.4.0" target="_blank" rel="noopener">tensorflow</a></li>
+<li>依赖包安装顺序：<ul>
+<li>Wheel&gt;=0.26</li>
+<li>Numpy&gt;=1.12.1</li>
+<li>Tensorflow-tensorboard&lt;0.5.0&gt;=0.4<ul>
+<li>Bleach==1.5.0<ul>
+<li>Six(1.11.0)</li>
+<li>Html5lib 0.999999(6个9)<ul>
+<li>Webencodings0.5.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Werkzeug&gt;=0.11.10</li>
+<li>Protobuf&gt;=3.3.0</li>
+<li>Markdown&gt;=2.6.8</li>
+</ul>
+</li>
+<li>Absl-py</li>
+<li>Enum34&gt;=1.1.6</li>
+</ul>
+</li>
+<li>显示Tensorflow安装成功（要哭了）</li>
+<li>Import tensorflow as tf 报错could not find解决方法：<br> ‘msvcp140.dll’,网上搜到可通过下载文件放入System32文件夹解决，也可以通过安装matplotlib解决，想到以后要用到matplotlib所以决定用第二种方法。</li>
+<li>安装matplotlib2.1.0，依赖包安装顺序：<ul>
+<li>Python-dateutil&gt;=2.0</li>
+<li>Cycler&gt;=0.10</li>
+<li>Pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;2.0.1</li>
+<li>Pytz</li>
+</ul>
+</li>
+<li>安装成功后，将matplotlib文件夹里的msvcp140.dll拷贝到system32文件夹中</li>
+<li>Import tensorflow成功</li>
+</ol>
+<h3 id="python包手动安装方法："><a href="#python包手动安装方法：" class="headerlink" title="python包手动安装方法："></a>python包手动安装方法：</h3><pre><code>* `.whl` : pip install xxx.whl
+* `.tar.gz源代码` ： 
+    ** 1) 解压缩 
+    ** 2）cd到相应目录
+    ** 3) python setup.py install(此处的python若不指定则为defaultpython，如果想装到某个版本或anaconda环境中需要指定python，方法是更改anaconda env文件夹下的python.exe的名字，如改为python27.exe则安装的时候使用python27 setup.py install安装)
+</code></pre><h3 id="PS-附上pip代理服务器设置方法"><a href="#PS-附上pip代理服务器设置方法" class="headerlink" title="PS.附上pip代理服务器设置方法"></a>PS.附上pip代理服务器设置方法</h3><pre><code>* pip --proxy http://xxx:xxx
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/" data-id="cjhplox1e000h688uu7jt2wkv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/13/Tensorflow-Install-With-Anaconda/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Tensorflow install with Anaconda
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/14/Mobile-Web-Develope2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mobile-Web-Develope2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 KDQ<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

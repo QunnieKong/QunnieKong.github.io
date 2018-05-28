@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>SSH for Windows | KDQ&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Windows7进行SSH连接最近尝试在GPU服务器上运行深度网络的推断，因为我的电脑为Windows 7系统，所以用到了Windows和Linux进行SSH通信的一些方法，在此记录一下。  连接服务器 Windows进行SSH连接需要使用特定软件，我下载的是PUTTY，一款小巧的软件，可以建立连接，连接成功后界面相当于Linux的控制台。 连接方法：  打开PUTTY，输入服务器的地址，默认SS">
+<meta name="keywords" content="SSH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH for Windows">
+<meta property="og:url" content="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/index.html">
+<meta property="og:site_name" content="KDQ&#39;s Blog">
+<meta property="og:description" content="Windows7进行SSH连接最近尝试在GPU服务器上运行深度网络的推断，因为我的电脑为Windows 7系统，所以用到了Windows和Linux进行SSH通信的一些方法，在此记录一下。  连接服务器 Windows进行SSH连接需要使用特定软件，我下载的是PUTTY，一款小巧的软件，可以建立连接，连接成功后界面相当于Linux的控制台。 连接方法：  打开PUTTY，输入服务器的地址，默认SS">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-01-02T02:55:48.916Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSH for Windows">
+<meta name="twitter:description" content="Windows7进行SSH连接最近尝试在GPU服务器上运行深度网络的推断，因为我的电脑为Windows 7系统，所以用到了Windows和Linux进行SSH通信的一些方法，在此记录一下。  连接服务器 Windows进行SSH连接需要使用特定软件，我下载的是PUTTY，一款小巧的软件，可以建立连接，连接成功后界面相当于Linux的控制台。 连接方法：  打开PUTTY，输入服务器的地址，默认SS">
+  
+    <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KDQ&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://qunniekong.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SSH-for-Windows" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/02/SSH-for-Windows/" class="article-date">
+  <time datetime="2018-01-02T02:32:35.000Z" itemprop="datePublished">2018-01-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SSH for Windows
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Windows7进行SSH连接"><a href="#Windows7进行SSH连接" class="headerlink" title="Windows7进行SSH连接"></a>Windows7进行SSH连接</h3><p>最近尝试在GPU服务器上运行深度网络的推断，因为我的电脑为Windows 7系统，所以用到了Windows和Linux进行SSH通信的一些方法，在此记录一下。</p>
+<ol>
+<li>连接服务器<ul>
+<li>Windows进行SSH连接需要使用特定软件，我下载的是PUTTY，一款小巧的软件，可以建立连接，连接成功后界面相当于Linux的控制台。</li>
+<li>连接方法：<br>  打开PUTTY，输入服务器的地址，默认SSH端口为22，点击open后提示输入用户名，回车之后输入密码即可。</li>
+<li>常用命令：<br>  记几个Linux中常用的命令：<br>  1) pwd —— 显示当前地址<br>  2) cd 地址 —— 地址跳转<br>  3）ifconfig —— 显示网络信息<br>  4）rm 文件名 —— 删除文件<br>  5）mkdir —— 创建地址、文件夹<br>  6）ls —— 显示当前目录下的所有文件及文件夹<br>  7）nvidia-sim —— 显示显卡使用情况</li>
+</ul>
+</li>
+<li>上传、下载文件<ul>
+<li>文件操作需要使用PUTTY中的PSFTP软件，打开软件以后输入指令open 服务器地址，系统提示输入用户名，回车后输入密码则显示连接成功。文件上传和下载时需要注意确定当前路径是否正确。</li>
+<li>上传文件：<br>  1) 上传文件夹：需要-r表示递归<pre><code>put -r c:/Users/Desktop/abc —— abc为文件夹名
+</code></pre>  2) 上传文件：<pre><code>put c:/Users/Desktop/a.jpg
+</code></pre></li>
+<li>下载文件：<br>  1) 首先需要设定下载到本地的存储目录：<pre><code>lcd c:/Users/Desktop
+</code></pre>  2）get 文件名</li>
+</ul>
+</li>
+<li>注意事项<ul>
+<li>如果两次上传的文件名相同，则默认覆盖已有文件且不进行报错，可能会造成文件损失</li>
+<li>下载文件时如果不指定本地位置(lcd指令)则会报unable to open错误</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/" data-id="cjhplox1k000o688uqoxryz87" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/05/Monocular-Depth-Estimation-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Monocular Depth Estimation - 1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Install OpenCV on Raspberry Pi</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 KDQ<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
