@@ -65,6 +65,88 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-TensorFlow-Install" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/24/TensorFlow-Install/" class="article-date">
+  <time datetime="2017-11-24T01:45:32.000Z" itemprop="datePublished">2017-11-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/24/TensorFlow-Install/">TensorFlow Install</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Tensor-Flow安装步骤"><a href="#Tensor-Flow安装步骤" class="headerlink" title="Tensor Flow安装步骤"></a>Tensor Flow安装步骤</h3><ol>
+<li>安装python3.5（一开始装成3.6了，装完了才发现tensorflow目前只支持到3.5）</li>
+<li>安装pip：python -m ensurepip</li>
+<li>解决pip -v报错: 到scripts文件夹查看pip的文件名，发现应为pip3.5，因此到cmd pip3.5 -v成功</li>
+<li>下载<a href="https://pypi.python.org/pypi/tensorflow/1.4.0" target="_blank" rel="noopener">tensorflow</a></li>
+<li>依赖包安装顺序：<ul>
+<li>Wheel&gt;=0.26</li>
+<li>Numpy&gt;=1.12.1</li>
+<li>Tensorflow-tensorboard&lt;0.5.0&gt;=0.4<ul>
+<li>Bleach==1.5.0<ul>
+<li>Six(1.11.0)</li>
+<li>Html5lib 0.999999(6个9)<ul>
+<li>Webencodings0.5.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Werkzeug&gt;=0.11.10</li>
+<li>Protobuf&gt;=3.3.0</li>
+<li>Markdown&gt;=2.6.8</li>
+</ul>
+</li>
+<li>Absl-py</li>
+<li>Enum34&gt;=1.1.6</li>
+</ul>
+</li>
+<li>显示Tensorflow安装成功（要哭了）</li>
+<li>Import tensorflow as tf 报错could not find解决方法：<br> ‘msvcp140.dll’,网上搜到可通过下载文件放入System32文件夹解决，也可以通过安装matplotlib解决，想到以后要用到matplotlib所以决定用第二种方法。</li>
+<li>安装matplotlib2.1.0，依赖包安装顺序：<ul>
+<li>Python-dateutil&gt;=2.0</li>
+<li>Cycler&gt;=0.10</li>
+<li>Pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;2.0.1</li>
+<li>Pytz</li>
+</ul>
+</li>
+<li>安装成功后，将matplotlib文件夹里的msvcp140.dll拷贝到system32文件夹中</li>
+<li>Import tensorflow成功</li>
+</ol>
+<h3 id="python包手动安装方法："><a href="#python包手动安装方法：" class="headerlink" title="python包手动安装方法："></a>python包手动安装方法：</h3><pre><code>* `.whl` : pip install xxx.whl
+* `.tar.gz源代码` ： 
+    ** 1) 解压缩 
+    ** 2）cd到相应目录
+    ** 3) python setup.py install(此处的python若不指定则为defaultpython，如果想装到某个版本或anaconda环境中需要指定python，方法是更改anaconda env文件夹下的python.exe的名字，如改为python27.exe则安装的时候使用python27 setup.py install安装)
+</code></pre><h3 id="PS-附上pip代理服务器设置方法"><a href="#PS-附上pip代理服务器设置方法" class="headerlink" title="PS.附上pip代理服务器设置方法"></a>PS.附上pip代理服务器设置方法</h3><pre><code>* pip --proxy http://xxx:xxx
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/" data-id="cjhpuzabi000leg8uwy89431n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Mobile-Web-Develope2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/14/Mobile-Web-Develope2/" class="article-date">
@@ -105,7 +187,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cjhplox110005688ufg0zvrgm" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cjhpuzaax0005eg8u5skstcdm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
@@ -157,7 +239,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cjhplox100004688u584y0k98" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cjhpuzaav0004eg8ugzo255wm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
@@ -209,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cjhplox0t0001688u0w6wpwtb" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cjhpuzaao0001eg8u4sw4ptfk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
@@ -264,7 +346,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cjhplox0n0000688udgqhcgdq" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cjhpuzaaf0000eg8ucgvh2e9f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
@@ -326,6 +408,10 @@
       <ul>
         
           <li>
+            <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
           </li>
         
@@ -339,10 +425,6 @@
         
           <li>
             <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
           </li>
         
       </ul>

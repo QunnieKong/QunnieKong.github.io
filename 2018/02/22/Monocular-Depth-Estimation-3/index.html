@@ -7,13 +7,13 @@
   
   <title>Monocular Depth Estimation 3 | KDQ&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Single-Ima">
+  <meta name="description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta name="keywords" content="Monocular Depth Estimation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Monocular Depth Estimation 3">
 <meta property="og:url" content="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/index.html">
 <meta property="og:site_name" content="KDQ&#39;s Blog">
-<meta property="og:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Single-Ima">
+<meta property="og:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_results.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_feature%20vector.png">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_laplacian.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_experiments1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_experiments2.png">
-<meta property="og:updated_time" content="2018-05-28T01:26:16.264Z">
+<meta property="og:updated_time" content="2018-05-28T02:41:22.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Monocular Depth Estimation 3">
-<meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Single-Ima">
+<meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_results.png">
   
     <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
@@ -101,10 +101,11 @@
 <li><a href="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/">迁移篇：Depth Extraction from Video Using Non-parametric Sampling</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">相对深度篇：Single-Image Depth Perception in the Wild &amp; Deep Ordinal Regression Network for Monocular Depth Estimation</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Single Image Depth Estimation Methods</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
+<hr>
 <h3 id="单目图像深度估计-3-尺度篇：Make3D"><a href="#单目图像深度估计-3-尺度篇：Make3D" class="headerlink" title="单目图像深度估计 - 3. 尺度篇：Make3D"></a>单目图像深度估计 - 3. 尺度篇：Make3D</h3><p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth3_results.png" alt="Make3D"></p>
 <p>终于进行到第三篇，这次膜拜一下单目图像深度识别的经典方法：Make3D(<a href="http://make3d.cs.cornell.edu/index.html" target="_blank" rel="noopener">Website</a>)。 Make3D方法经典的原因有二，其一是相关论文<a href="http://www.cs.cornell.edu/~asaxena/learningdepth/NIPS_LearningDepth.pdf" target="_blank" rel="noopener">Learning Depth from Single Monocular Images</a>发表于2005年，是我找到的最早的一篇单目图像深度识别的论文；其二是近期的许多研究在论文中都将自己的方法与Make3D进行了对比。这篇博客主要整理一下2005年发表于NIPS的<a href="http://www.cs.cornell.edu/~asaxena/learningdepth/NIPS_LearningDepth.pdf" target="_blank" rel="noopener">这篇</a>文章内容和我的相关理解。</p>
 <p>上一篇文章中提到过，想要对深度进行估计，不能仅仅依靠局部特征(local features)还需要全局信息(global context)。举个例子，一个蓝色的像素点或一小块蓝色的图像区域，仅仅依靠其本身的信息无法判断它是属于一个蓝色的物体还是属于蓝色的天空。文中提到，人类对深度进行预测时也用到了全局特征如纹理变化，结构变化，轮廓遮挡，已知物体大小，模糊和失焦等。因此，想进行更加准确的深度预测，重要的是<strong>如何提取并利用全局信息</strong>。</p>
@@ -128,7 +129,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjhplox1c000f688uz03l3ard" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjhpuzab5000ceg8uh793pget" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -202,6 +203,10 @@
       <ul>
         
           <li>
+            <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
           </li>
         
@@ -215,10 +220,6 @@
         
           <li>
             <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
           </li>
         
       </ul>

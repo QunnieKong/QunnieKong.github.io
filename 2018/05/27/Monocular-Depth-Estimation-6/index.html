@@ -7,13 +7,13 @@
   
   <title>Monocular Depth Estimation 6 | KDQ&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Single-Ima">
+  <meta name="description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta name="keywords" content="Monocular Depth Estimation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Monocular Depth Estimation 6">
 <meta property="og:url" content="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/index.html">
 <meta property="og:site_name" content="KDQ&#39;s Blog">
-<meta property="og:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Single-Ima">
+<meta property="og:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_ego_model1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_ego_model2.png">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_comp.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_eq.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_loss.png">
-<meta property="og:updated_time" content="2018-05-28T01:25:44.523Z">
+<meta property="og:updated_time" content="2018-05-28T02:41:09.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Monocular Depth Estimation 6">
-<meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Single-Ima">
+<meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_ego_model1.png">
   
     <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
@@ -101,17 +101,18 @@
 <li><a href="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/">迁移篇：Depth Extraction from Video Using Non-parametric Sampling</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">相对深度篇：Single-Image Depth Perception in the Wild &amp; Deep Ordinal Regression Network for Monocular Depth Estimation</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Single Image Depth Estimation Methods</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
+<hr>
 <h3 id="单目图像深度估计-6-无监督篇：Left-Right-Consistency-amp-Ego-Motion"><a href="#单目图像深度估计-6-无监督篇：Left-Right-Consistency-amp-Ego-Motion" class="headerlink" title="单目图像深度估计 - 6. 无监督篇：Left-Right Consistency &amp; Ego Motion"></a>单目图像深度估计 - 6. 无监督篇：Left-Right Consistency &amp; Ego Motion</h3><p>近几年有关单目图像深度识别的算法以CNN为主流，更细的说是以无监督的同时对深度、计算机角度、光流等同时计算的端到端深度网络为主流。<br>所谓无监督其实是指在训练过程中不需要输入真实的深度值，这样做有一个好处就是目前能够测量到深度信息的传感器还不够精确，因此由不够精确的label训练出的model得到的预测结果必然不会特别令人满意；<br>所谓同时计算呢，在我理解是指在训练过程中，用一个能够表征时间序列上有前后关系的帧之间的差别的loss同时训练多个网络，而在得到model后每个网络可以单独使用。<br>很聪明，不同作用的网络相当于人为的特征提取过程，最后的预测基于这个人为的特征提取结果，但这种方法也有其缺点，我能想到的就是参数的增加，网络结构的复杂化和人为特征对最终预测结果有没有起引导作用只能用实验去证明。</p>
 <p>详细说呢，首先，所谓的“无监督”虽然不需要输入真实深度信息，但需要输入双目摄像头获取到的同一时刻不同角度的图像或者前后帧图像，只是这样就叫做无监督在我看来略显牵强。<br>其次，关于多网络共同训练，本来深度网络就很难解释，复杂化网络的结构得到多个看似可以解释的子网络，是否和深度网络的端到端黑盒特性有所冲突？较重的人为干涉是不是反而影响深度网络对数据隐含知识的理解和抽取？<br>以上只是我个人的一些思考，希望在未来的学习过程中能得到一些答案。</p>
-<p>===</p>
+<hr>
 <h4 id="UnSupervised-Learning-of-Depth-and-Ego-Motion-from-Video，CVPR，2017"><a href="#UnSupervised-Learning-of-Depth-and-Ego-Motion-from-Video，CVPR，2017" class="headerlink" title="UnSupervised Learning of Depth and Ego-Motion from Video，CVPR，2017"></a>UnSupervised Learning of Depth and Ego-Motion from Video，CVPR，2017</h4><p>接下来写一下Google发表于CVPR2017的这篇文章，从题目可以看出这篇文章提出了一种非监督的多功能网络，主要思想就像之前提到过的用一个loss同时训练两个网络。网络的结果如Fig.2,其中第一个网络可接受一幅图片作为输入，输出其对应的深度图片；第二个网络为姿态网络，接受t，t+1和t-1三个时刻三幅图片作为输入，输出从t到t+1和从t到t-1的相机姿态变化矩阵。<br>关于Pose的部分我不很了解，所以主要说明一下Depth CNN网络和Loss的结构。</p>
 <p><strong>Depth CNN</strong><br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_ego_model1.png" alt="Model Architecture"><br>基本结构见上图，输入为前中后三帧连续的图片，同时训练两个网络，一个得到深度预测结果，一个得到视差矩阵结果。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_ego_model2.png" alt="Model Architecture"><br>其中视差网络用到了深度预测网络的预测结果。应用结构与DisNet相同的网络作为深度估计的网络，DispNet拥有主流的encoder-decoder结构，下一步打算看一下DispNet的相关Paper，因此在这不多介绍。作者提到使用多视角的图片训练深度预测网络结果和单张图片效果没有很大差异，说明光流约束需要在对多视角图片进行有效利用的前提下使用。</p>
 <p><strong>Loss</strong><br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_ego_eq.png" alt="Loss"><br>由Eq.4可见，Loss分为三个部分。其中第一部分为sample和target的差别，第二部分为多尺度平滑参数，第三部的目的是为了避免Es趋于0。</p>
-<p>===</p>
+<hr>
 <h4 id="UnSupervised-Monocular-Depth-Estimation-with-Left-Right-Consistency-CVPR-2017"><a href="#UnSupervised-Monocular-Depth-Estimation-with-Left-Right-Consistency-CVPR-2017" class="headerlink" title="UnSupervised Monocular Depth Estimation with Left-Right Consistency, CVPR, 2017"></a>UnSupervised Monocular Depth Estimation with Left-Right Consistency, CVPR, 2017</h4><p>这篇Paper主要思想为使用双目摄像头得到的同一时刻的两幅图片(left，right)进行训练，得到由left生成right（或right生成left）的网络，然后根据生成的双目图片得到depth。那所谓的无监督是指不需要ground truth depth，只需要双目图片。这种方法的好处是避免了深度测量硬件本身的误差，作者提出现有的深度测量硬件比如雷达、红外相机、TOF相机等本身就有误差，而且具有有效范围的限制，对比看来摄像头或双目摄像头硬件技术更为成熟，误差也会更小，因此在此基础上训练出来的网络应该有更好的精度。</p>
 <p>目前也有类似的由左图生成右图的方法，但本位方法的改进就在于提出了一种left-right consistency，在训练过程中不仅限制由左图到右图的连续性，同时也限制右图到左图的连续性。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_comp.png" alt="Method Compare"><br>上图为几种方法的比较，可以看出Naive方法的输出只受target影响，而NoLR方法的输出受左右图同时的影响，本文方法则在NoLR的基础上增加了左右连续性限制。</p>
 <p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_eq.png" alt="Loss"><br>上图为文章的主要创新点：左右一致性Loss。这个Loss可以同时考虑到左右视差一致性、平滑性、重建效果。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_loss.png" alt="Loss Architecture"><br>Loss公式表示如上图，可见Loss分为三部分：</p>
@@ -131,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjhplox1g000j688uwb3lusq2" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjhpuzab9000feg8ubeb3at6o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -141,6 +142,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/05/28/Monocular-Depth-Estimation-7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Monocular Depth Estimation 7
+        
+      </div>
+    </a>
   
   
     <a href="/2018/05/22/Monocular-Depth-Estimation-5/" id="article-nav-older" class="article-nav-link-wrap">
@@ -196,6 +206,10 @@
       <ul>
         
           <li>
+            <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
           </li>
         
@@ -209,10 +223,6 @@
         
           <li>
             <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
           </li>
         
       </ul>
