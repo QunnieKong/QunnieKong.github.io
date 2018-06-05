@@ -65,6 +65,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Monocular-Depth-Estimation-8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/05/Monocular-Depth-Estimation-8/" class="article-date">
+  <time datetime="2018-06-05T02:08:09.000Z" itemprop="datePublished">2018-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">入门篇：图像深度估计相关总结</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/">应用篇：Learning to be a Depth Camera</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/">尺度篇：Make3D</a></li>
+<li><a href="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/">迁移篇：Depth Extraction from Video Using Non-parametric Sampling</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
+</ol>
+<hr>
+<h3 id="单目图像深度估计-SLAM辅助篇：MegaDepth"><a href="#单目图像深度估计-SLAM辅助篇：MegaDepth" class="headerlink" title="单目图像深度估计 - SLAM辅助篇：MegaDepth"></a>单目图像深度估计 - SLAM辅助篇：MegaDepth</h3><p>今天的论文笔记是关于以下这篇Paper：<br>[1] MegaDepth-Learning Single-View Depth Prediction from Internet Photos, CVPR, 2018 [<a href="http://www.cs.cornell.edu/projects/megadepth/" target="_blank" rel="noopener">Project Page</a>]<br>CVPR的单目深度估计论文有很多，粗略的看了一圈，决定写这篇。之前的博客里写到过说目前所有的计算机视觉相关的深度学习方法都有一个共同的问题——对数据集的依赖。在单目图像深度估计来看呢，就是基于室内数据集NYUDepth训练出来的模型在室外数据集KITTI、CitiScape里表现不好，反之亦然。与此同时，目前的数据集还存在很多其他不足比如场景单一(NYU)，训练集规模小（Make3D），采样稀疏（KITTI）。<br>为了解决这些问题，作者提出一个全新的思路：</p>
+<p><strong>用来源于网络的多张景点图像通过建模算法进行三维建模，从而得到对应的深度预测值，通过对预测值进行一系列优化（如划分临时物体（如游客），根据语义分割将前景、背景和天空单列处理等），用优化后的数据训练深度预测网络，通过结合梯度、尺度不变和相对深度的loss进行网络训练。</strong></p>
+<p>总结的还不够精炼，我认为loss方面就是将现在比较流行的方法大杂烩了一下，更有创新的是作者利用网络图片的思路。<br>因为某一热门景点的照片，通过tag可以轻松的在网络上找到，而且照片来源的多样性保证了照片角度的丰富性，更适用于放在三维建模算法里进行建模，文章中用到的建模软件为COLMAP。面临的问题就是网络照片中的随机内容，比如景点照中的行人，甚至以景点为tag的自拍。</p>
+<h4 id="数据集建立"><a href="#数据集建立" class="headerlink" title="数据集建立"></a>数据集建立</h4><p>首先在Flickr上收集Landmarks10K数据集中的地标对应的图片，然后用SfM(structure from motion)和MVS(multi-view stereo)方法进行3D建模，建模后获取到的是景点的模型和建模时使用的每张图片对应的深度图。<br>但得到的原始深度图有很多噪声点和异常值，因此要对深度图进行优化，优化分为以下两个步骤：</p>
+<ol>
+<li>改进MVS算法，在每一步迭代时对比像素深度更改，限制只能进行小范围的更改，并且附加中值滤波去除不稳定的深度值。提出这个优化的原因是在COLMAP的MVS过程中，算法设计为了保证geometric consistency，因此对于一些存在前景比如游客的照片，在迭代的过程中会把前景深度同化成背景的深度，造成数据出错。</li>
+<li>利用语义分割生成序列深度（相对深度）信息。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_refine_MVS.png" alt="Refine MVS"></p>
+<p>具体解释一下第二个步骤。<br>由于multi-view stereo方法不擅长处理临时物体（行人、汽车）和难以建模的物体（杆、信号灯、天空区域），但这些难以识别的物体可以在语义上进行分割和提取。作者使用语义信息做了以下三个处理：</p>
+<ol>
+<li>Semantic filtering:去除MVS得到的不准确前景(foreground)深度信息。用<strong>PSPNet</strong>对图像进行语义分割，将像素分为前景（喷泉、雕塑、游客）、背景（建筑、塔、山）和天空三类。</li>
+<li>Euclidean vs. ordinal depth:以语义为标准对图片进行分类，划分为euclidean depth data和ordinal depth data。通过阈值判断在建模过程中重建的（reconstructed）像素的比例，大于30%的图片认为是有效的图片，可以用于进行Euclidean估计，这样可以排除自拍的照片，因为自拍中建筑物占比较小；</li>
+<li>Automatic ordinal depth labeling:利用语义标签自动标记前后深度序列信息。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_auto_ordinal.png" alt="Auto Ordinal"></p>
+<h4 id="Loss组成"><a href="#Loss组成" class="headerlink" title="Loss组成"></a>Loss组成</h4><p>文章的loss分为三个部分，分别是尺度不变loss，多尺度梯度loss和相对序数关系loss，公式如下：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_loss.png" alt="Loss"></p>
+<h4 id="总结和思考"><a href="#总结和思考" class="headerlink" title="总结和思考"></a>总结和思考</h4><p>这片文章找到了网络图片利用的一个突破口，网络图片的数量巨大，但是缺少对应的深度标签，由于深度网络对数据的依赖，有效的利用大量的网络数据可以提高预测模型的表现能力。但问题同样存在，因为深度估计建立在MVS等算法基础上，有了中间商赚差价导致最终的结果不能超过MVS生成的图像。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cji1i2qq2000lj48u5oep9g3g" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Monocular-Depth-Estimation-7" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/28/Monocular-Depth-Estimation-7/" class="article-date">
@@ -95,7 +163,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
@@ -123,7 +191,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cjhpv5u01000jw88uljxvydty" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cji1i2qq0000ij48unoxbw7gq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -165,7 +233,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
@@ -195,7 +263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjhpv5tzz000hw88uoocgqy11" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cji1i2qpv000gj48uexeqrund" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -237,7 +305,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
@@ -275,7 +343,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/" data-id="cjhpv5tzx000fw88ucwdtcku7" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/" data-id="cji1i2qpr000dj48uv88edenm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -317,7 +385,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
@@ -358,7 +426,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/" data-id="cjhpv5tzu000dw88uaigs5lbq" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/" data-id="cji1i2qpq000bj48uqt408nrc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -400,7 +468,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
@@ -427,7 +495,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjhpv5tzt000cw88udpi3hmgr" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cji1i2qpf0004j48uq2isq47b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -469,7 +537,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
@@ -500,7 +568,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="cjhpv5tzq0009w88une7hthf1" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="cji1i2qpi0005j48uzm79seq7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -543,15 +611,15 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
 <p>作为入门篇，这篇写的大部分是我个人的想法，脉络的话大约按照是什么，为什么和怎么做三部分进行。</p>
 <h4 id="什么是图像深度估计"><a href="#什么是图像深度估计" class="headerlink" title="什么是图像深度估计"></a>什么是图像深度估计</h4><p>顾名思义，深度估计就是从RGB图像中估计图像中物体的深度，是一个从二维到三维的艰难过程。此处的艰难是对计算机来说，而人类的视觉系统是天生的双目系统，并且通过大脑的计算可以实时生成深度信息甚至空间的三维建模。</p>
-<p>所谓双目立体视觉，即模仿人眼成像原理，在同一时刻不同位置用两台相同的设备对物体进行观测。光沿直线传播，因此同一物体在不同位置的成像可最终确定物体的真实位置。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo1.png" alt="双目立体视觉"><br>在两个相机已经校准的前提下，已知相机的光点距离、焦距和物体在画面内的水平距离等参数时，可计算得到真实距离信息。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo2.png" alt="双目立体视觉计算方法"><br>双目立体视觉是目前常见的深度信息获取方法，在SLAM、智能车、体感游戏等领域都有大规模的应用。其缺点也较为明显，如硬件体积小，计算量大（图像校准），精度受限（复杂重复画面如树林影响图像校准，时间轴校准困难）等。目前常见的深度信息获取方法除双目立体视觉方法外还有结构光、TOF等方法（见下图)，但各有优缺点，比如体积大（TOF）、能耗高（Kinect配有散热系统）、受环境影响（阳光中红外线影响）、算法复杂度高、实时性差（TOF实时性最高但精度较低）等。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_method.png" alt="深度图像获取方法"></p>
+<p>所谓双目立体视觉，即模仿人眼成像原理，在同一时刻不同位置用两台相同的设备对物体进行观测。光沿直线传播，因此同一物体在不同位置的成像可最终确定物体的真实位置。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo1.png" alt="双目立体视觉"><br>在两个相机已经校准的前提下，已知相机的光点距离、焦距和物体在画面内的水平距离等参数时，可计算得到真实距离信息。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo2.png" alt="双目立体视觉计算方法"><br>双目立体视觉是目前常见的深度信息获取方法，在SLAM、智能车、体感游戏等领域都有大规模的应用。其缺点也较为明显，如硬件体积大，计算量大（图像校准），精度受限（复杂重复画面如树林影响图像校准，时间轴校准困难）等。目前常见的深度信息获取方法除双目立体视觉方法外还有结构光、TOF等方法（见下图)，但各有优缺点，比如体积大（TOF）、能耗高（Kinect配有散热系统）、受环境影响（阳光中红外线影响）、算法复杂度高、实时性差（TOF实时性最高但精度较低）等。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_method.png" alt="深度图像获取方法"></p>
 <p>由于以上基于硬件的深度获取方法还存在一定缺点，在深度学习、机器学习、人工智能飞速发展的今天，用更“智能”的方法对图像深度进行估计，弥补硬件的不足，同时为其他图像应用如语义分割、物体识别等提供更多的特征信息成了大牛们研究的方向。</p>
-<h4 id="为什么是单目图像深度估计"><a href="#为什么是单目图像深度估计" class="headerlink" title="为什么是单目图像深度估计"></a>为什么是单目图像深度估计</h4><p>无论是深度学习、机器学习还是机器视觉的目标，到目前为止仍然是：更接近人类。那么有趣的问题来了，就算我们闭上一只眼睛（神盾局长、海盗船长）仍然可以分辨物体深度。我们是怎么做到的？从眼睛的成像原理来看，人类获取到的也只是某一时刻物体的二维成像，我们没有类似深度传感器的结构，那么深度信息是什么时候附加在我们看到的画面上的？<br>因为我们的大脑利用了已有的知识：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual1.png" alt="深度知识"><br>近大远小<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual2.png" alt="深度知识"><br>推断感知(?)<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual3.png" alt="深度知识"><br>消失点</p>
+<h4 id="为什么是单目图像深度估计"><a href="#为什么是单目图像深度估计" class="headerlink" title="为什么是单目图像深度估计"></a>为什么是单目图像深度估计</h4><p>无论是深度学习、机器学习还是机器视觉的目标，到目前为止仍然是：更接近人类。那么有趣的问题来了，就算我们闭上一只眼睛（神盾局长、海盗船长）仍然可以分辨物体深度。我们是怎么做到的？从眼睛的成像原理来看，人类获取到的也只是某一时刻物体的二维成像，我们没有类似深度传感器的结构，那么深度信息是什么时候附加在我们看到的画面上的？<br>因为我们的大脑利用了已有的知识：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual1.png" alt="深度知识"><br>近大远小<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual2.png" alt="深度知识"><br>轮廓和遮挡<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual3.png" alt="深度知识"><br>消失点</p>
 <p>这些透视知识学习过绘画的人会更了解，我们的大脑总结出了这些知识和经验，并对每次观测附加相应的信息，形成了精度极高的深度估计系统，在捂住一只眼睛的情况下，也可以对深度进行相应的估计和预测。<br>很有趣吧。</p>
 <p>无论是深度学习还是机器学习，核心都是学习，我们希望机器能拥有像人脑一样的学习能力，所谓学习就是总结并利用知识和经验的能力。因此，若是能训练机器完成对单幅图像的深度估计，那么在知识的理解和运用上也是一种突破，更别提单目相比传统深度获取方法的优点（成本低，体积小，能耗低等）了。<br>并且单目图像深度估计的应用广泛，常见的有电影2D转3D，网络图片理解，3D建模，机器人，智能车等。</p>
 <h4 id="怎么进行单目图像深度估计"><a href="#怎么进行单目图像深度估计" class="headerlink" title="怎么进行单目图像深度估计"></a>怎么进行单目图像深度估计</h4><p>由于我刚刚进行这方面的研究，只看了不到10篇论文，这几篇论文的方法大致可以分为：基于深度迁移的方法，基于相对深度的方法和基于深度网络的方法三类。在之后的文章中会详细讲解每一篇论文。<br>毫无疑问，随着深度学习方法的发展，应用深度网络进行深度估计越来越成为主流的单目图像深度估计方法，但这种越来越复杂化的方法真的是正确的发展方向吗？</p>
@@ -559,7 +627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="cjhpv5tzo0008w88u0prdc2vo" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="cji1i2qpd0003j48un46bae3s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -620,7 +688,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/" data-id="cjhpv5u03000lw88uc5as36ce" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/" data-id="cji1i2qq4000nj48uojfaoe8q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li></ul>
@@ -731,78 +799,9 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="cjhpv5tzg0003w88udun71hi4" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="cji1i2qp80001j48u181fqjkj" class="article-share-link">Share</a>
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Tensorflow-Install-With-Anaconda" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/13/Tensorflow-Install-With-Anaconda/" class="article-date">
-  <time datetime="2017-12-13T08:04:28.000Z" itemprop="datePublished">2017-12-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/13/Tensorflow-Install-With-Anaconda/">Tensorflow install with Anaconda</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="在Anaconda的python环境中安装TensorFlow"><a href="#在Anaconda的python环境中安装TensorFlow" class="headerlink" title="在Anaconda的python环境中安装TensorFlow"></a>在Anaconda的python环境中安装TensorFlow</h3><ol>
-<li>安装Anaconda</li>
-<li>创建python3.5环境<ul>
-<li>cmd中conda create -n tensorflow python=3.5，其中tensorflow为环境的名称</li>
-<li>目前TensorFlow对python3.5的支持最好</li>
-<li>如果无法使用conda命令则需要手动添加环境变量：path中增加Anaconda3\Script路径<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/tensorflow%E9%85%8D%E7%BD%AE1.png" alt="Anaconda Python环境搭建"></li>
-</ul>
-</li>
-<li>安装TensorFlow<ul>
-<li>Activate tensorflow：启动tensorflow环境</li>
-<li>Pip install tensorflow<br>  ** 在有代理的网络下需要设置pip代理服务器：pip install –proxy(anaconda环境貌似不需要)</li>
-<li>deactivate：退出环境</li>
-</ul>
-</li>
-<li>配置PyCharm<ul>
-<li>File-&gt;Settings-&gt;Project:plug-n-learn-&gt;Project Interpreter 选择Anaconda目录中env（虚拟环境）下的 环境名称\python.exe</li>
-<li>pycharm包管理：想用pycharm下载更新包需要设置代理服务器（设置方法为 file-settings-appearance &amp; behavior-system settings-HTTP Proxy）<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/tensorflow%E9%85%8D%E7%BD%AE2.png" alt="Pycharm配置"></li>
-</ul>
-</li>
-<li>配置spyder<ul>
-<li>打开anaconda navigator，下拉菜单选择tensorflow环境后点击spyder图标下的install按钮</li>
-</ul>
-</li>
-<li>测试<ul>
-<li>activate tensorflow</li>
-<li>python</li>
-<li>import tensorflow</li>
-<li>成功</li>
-</ul>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/12/13/Tensorflow-Install-With-Anaconda/" data-id="cjhpv5u0d000qw88uxdgd6hi1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
-
     </footer>
   </div>
   
@@ -847,7 +846,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
     </div>
   </div>
 
@@ -858,6 +857,10 @@ export http_proxy no_proxy
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
+          </li>
         
           <li>
             <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
@@ -873,10 +876,6 @@ export http_proxy no_proxy
         
           <li>
             <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
           </li>
         
       </ul>

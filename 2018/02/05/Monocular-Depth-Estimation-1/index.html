@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual3.png">
-<meta property="og:updated_time" content="2018-05-28T02:41:14.065Z">
+<meta property="og:updated_time" content="2018-06-05T09:44:04.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Monocular Depth Estimation - 1">
 <meta name="twitter:description" content="单目图像深度估计 - 1.入门篇最近一直在看单目深度图像估计相关的Paper，小白入门困难多多，于是打算把看过的几篇论文和相关理论总结一下。顺序如下：  入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深">
@@ -103,15 +103,15 @@
 <li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
 <p>作为入门篇，这篇写的大部分是我个人的想法，脉络的话大约按照是什么，为什么和怎么做三部分进行。</p>
 <h4 id="什么是图像深度估计"><a href="#什么是图像深度估计" class="headerlink" title="什么是图像深度估计"></a>什么是图像深度估计</h4><p>顾名思义，深度估计就是从RGB图像中估计图像中物体的深度，是一个从二维到三维的艰难过程。此处的艰难是对计算机来说，而人类的视觉系统是天生的双目系统，并且通过大脑的计算可以实时生成深度信息甚至空间的三维建模。</p>
-<p>所谓双目立体视觉，即模仿人眼成像原理，在同一时刻不同位置用两台相同的设备对物体进行观测。光沿直线传播，因此同一物体在不同位置的成像可最终确定物体的真实位置。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo1.png" alt="双目立体视觉"><br>在两个相机已经校准的前提下，已知相机的光点距离、焦距和物体在画面内的水平距离等参数时，可计算得到真实距离信息。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo2.png" alt="双目立体视觉计算方法"><br>双目立体视觉是目前常见的深度信息获取方法，在SLAM、智能车、体感游戏等领域都有大规模的应用。其缺点也较为明显，如硬件体积小，计算量大（图像校准），精度受限（复杂重复画面如树林影响图像校准，时间轴校准困难）等。目前常见的深度信息获取方法除双目立体视觉方法外还有结构光、TOF等方法（见下图)，但各有优缺点，比如体积大（TOF）、能耗高（Kinect配有散热系统）、受环境影响（阳光中红外线影响）、算法复杂度高、实时性差（TOF实时性最高但精度较低）等。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_method.png" alt="深度图像获取方法"></p>
+<p>所谓双目立体视觉，即模仿人眼成像原理，在同一时刻不同位置用两台相同的设备对物体进行观测。光沿直线传播，因此同一物体在不同位置的成像可最终确定物体的真实位置。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo1.png" alt="双目立体视觉"><br>在两个相机已经校准的前提下，已知相机的光点距离、焦距和物体在画面内的水平距离等参数时，可计算得到真实距离信息。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo2.png" alt="双目立体视觉计算方法"><br>双目立体视觉是目前常见的深度信息获取方法，在SLAM、智能车、体感游戏等领域都有大规模的应用。其缺点也较为明显，如硬件体积大，计算量大（图像校准），精度受限（复杂重复画面如树林影响图像校准，时间轴校准困难）等。目前常见的深度信息获取方法除双目立体视觉方法外还有结构光、TOF等方法（见下图)，但各有优缺点，比如体积大（TOF）、能耗高（Kinect配有散热系统）、受环境影响（阳光中红外线影响）、算法复杂度高、实时性差（TOF实时性最高但精度较低）等。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_method.png" alt="深度图像获取方法"></p>
 <p>由于以上基于硬件的深度获取方法还存在一定缺点，在深度学习、机器学习、人工智能飞速发展的今天，用更“智能”的方法对图像深度进行估计，弥补硬件的不足，同时为其他图像应用如语义分割、物体识别等提供更多的特征信息成了大牛们研究的方向。</p>
-<h4 id="为什么是单目图像深度估计"><a href="#为什么是单目图像深度估计" class="headerlink" title="为什么是单目图像深度估计"></a>为什么是单目图像深度估计</h4><p>无论是深度学习、机器学习还是机器视觉的目标，到目前为止仍然是：更接近人类。那么有趣的问题来了，就算我们闭上一只眼睛（神盾局长、海盗船长）仍然可以分辨物体深度。我们是怎么做到的？从眼睛的成像原理来看，人类获取到的也只是某一时刻物体的二维成像，我们没有类似深度传感器的结构，那么深度信息是什么时候附加在我们看到的画面上的？<br>因为我们的大脑利用了已有的知识：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual1.png" alt="深度知识"><br>近大远小<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual2.png" alt="深度知识"><br>推断感知(?)<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual3.png" alt="深度知识"><br>消失点</p>
+<h4 id="为什么是单目图像深度估计"><a href="#为什么是单目图像深度估计" class="headerlink" title="为什么是单目图像深度估计"></a>为什么是单目图像深度估计</h4><p>无论是深度学习、机器学习还是机器视觉的目标，到目前为止仍然是：更接近人类。那么有趣的问题来了，就算我们闭上一只眼睛（神盾局长、海盗船长）仍然可以分辨物体深度。我们是怎么做到的？从眼睛的成像原理来看，人类获取到的也只是某一时刻物体的二维成像，我们没有类似深度传感器的结构，那么深度信息是什么时候附加在我们看到的画面上的？<br>因为我们的大脑利用了已有的知识：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual1.png" alt="深度知识"><br>近大远小<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual2.png" alt="深度知识"><br>轮廓和遮挡<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual3.png" alt="深度知识"><br>消失点</p>
 <p>这些透视知识学习过绘画的人会更了解，我们的大脑总结出了这些知识和经验，并对每次观测附加相应的信息，形成了精度极高的深度估计系统，在捂住一只眼睛的情况下，也可以对深度进行相应的估计和预测。<br>很有趣吧。</p>
 <p>无论是深度学习还是机器学习，核心都是学习，我们希望机器能拥有像人脑一样的学习能力，所谓学习就是总结并利用知识和经验的能力。因此，若是能训练机器完成对单幅图像的深度估计，那么在知识的理解和运用上也是一种突破，更别提单目相比传统深度获取方法的优点（成本低，体积小，能耗低等）了。<br>并且单目图像深度估计的应用广泛，常见的有电影2D转3D，网络图片理解，3D建模，机器人，智能车等。</p>
 <h4 id="怎么进行单目图像深度估计"><a href="#怎么进行单目图像深度估计" class="headerlink" title="怎么进行单目图像深度估计"></a>怎么进行单目图像深度估计</h4><p>由于我刚刚进行这方面的研究，只看了不到10篇论文，这几篇论文的方法大致可以分为：基于深度迁移的方法，基于相对深度的方法和基于深度网络的方法三类。在之后的文章中会详细讲解每一篇论文。<br>毫无疑问，随着深度学习方法的发展，应用深度网络进行深度估计越来越成为主流的单目图像深度估计方法，但这种越来越复杂化的方法真的是正确的发展方向吗？</p>
@@ -119,7 +119,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="cjhpv5tzo0008w88u0prdc2vo" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="cji1i2qpd0003j48un46bae3s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -180,7 +180,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
     </div>
   </div>
 
@@ -191,6 +191,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
+          </li>
         
           <li>
             <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
@@ -206,10 +210,6 @@
         
           <li>
             <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/22/Monocular-Depth-Estimation-3/">Monocular Depth Estimation 3</a>
           </li>
         
       </ul>

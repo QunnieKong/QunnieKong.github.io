@@ -5,23 +5,24 @@
   
 
   
-  <title>Monocular Depth Estimation 7 | KDQ&#39;s Blog</title>
+  <title>Monocular Depth Estimation 8 | KDQ&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta name="keywords" content="Monocular Depth Estimation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Monocular Depth Estimation 7">
-<meta property="og:url" content="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/index.html">
+<meta property="og:title" content="Monocular Depth Estimation 8">
+<meta property="og:url" content="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/index.html">
 <meta property="og:site_name" content="KDQ&#39;s Blog">
 <meta property="og:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth7_diw_eq.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth7_size_eq.png">
-<meta property="og:updated_time" content="2018-06-05T09:44:06.118Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_refine_MVS.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_auto_ordinal.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_loss.png">
+<meta property="og:updated_time" content="2018-06-05T09:45:01.428Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Monocular Depth Estimation 7">
+<meta name="twitter:title" content="Monocular Depth Estimation 8">
 <meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth7_diw_eq.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_refine_MVS.png">
   
     <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
   
@@ -68,10 +69,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Monocular-Depth-Estimation-7" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Monocular-Depth-Estimation-8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/05/28/Monocular-Depth-Estimation-7/" class="article-date">
-  <time datetime="2018-05-28T02:27:30.000Z" itemprop="datePublished">2018-05-28</time>
+    <a href="/2018/06/05/Monocular-Depth-Estimation-8/" class="article-date">
+  <time datetime="2018-06-05T02:08:09.000Z" itemprop="datePublished">2018-06-05</time>
 </a>
     
   </div>
@@ -82,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Monocular Depth Estimation 7
+      Monocular Depth Estimation 8
     </h1>
   
 
@@ -102,31 +103,29 @@
 <li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
-<h3 id="单目图像深度估计-相对深度篇：Depth-in-the-Wild-amp-Size-to-Depth"><a href="#单目图像深度估计-相对深度篇：Depth-in-the-Wild-amp-Size-to-Depth" class="headerlink" title="单目图像深度估计 - 相对深度篇：Depth in the Wild &amp; Size to Depth"></a>单目图像深度估计 - 相对深度篇：Depth in the Wild &amp; Size to Depth</h3><p>目前单目图像深度估计需要面临的主要问题之一就是我们用来获得ground truth depth的硬件设备本身具有一定误差和环境限制，比如说基于红外的相机(Kinect)无法在室外使用，而所有设备都只在一定距离范围内具有精确度，超出这个范围的获取结果是不可信的，因此我们所获得的深度图本身就具有一定误差。在误差的基础上进行建模，使得后续模型拟合的难度加大了。<br>因此就有科学家提出，其实人类对深度的实际数值并不敏感，反而是对相对深度即物体的前后关系更加敏感。这篇笔记打算写的两篇论文都是基于这个思考而来：<br>[1] Single-Image Depth Perception in the Wild, NIPS, 2016  [<a href="http://www-personal.umich.edu/~wfchen/depth-in-the-wild/" target="_blank" rel="noopener">Project Page</a>]<br>[2] Size to Depth: A New Perspective for Single Image Estimation, CVPR, 2018</p>
-<hr>
-<h4 id="Single-Image-Depth-Perception-in-the-Wild-NIPS-2016"><a href="#Single-Image-Depth-Perception-in-the-Wild-NIPS-2016" class="headerlink" title="Single-Image Depth Perception in the Wild, NIPS, 2016"></a>Single-Image Depth Perception in the Wild, NIPS, 2016</h4><p>这篇文章很有趣，作者指出就算是具有完备又复杂视觉系统的人类也很难推断出物体的实际深度(距离)值，而且人也会被迷惑(比如“鸽子为什么这么大”)，但人可以根据经验(物体大小)、遮挡关系、光线和阴影等知识来准确的判断相对深度，即物体的前后关系。之前已经有由相对深度估计绝对深度的研究，但缺少适用于现状的数据集。因此这篇文章的贡献主要有：</p>
-<ul>
-<li>Depth in the Wild数据集</li>
-<li>通过相对深度预测绝对深度的方法</li>
-</ul>
-<p><strong>DIW数据集</strong><br>目前已有的数据集的缺陷有：基于Kinect的数据集局限于室内场景；基于LIDAR的数据集局限于人造的场景(街道)。因此DIW的数据集的目的是采集更多的非人造场景。<br>文章作者详细写了数据集的整理和标注方法。首先，从英文词典中随机抽取关键词到图片网站Flickr上搜索，然后手动去除剪贴画等人造的图片，最后用众包的方式获取打标结果。<br>数据集中相对深度的表达方式为问询(query)，一个query可以表达为(i,j,r),其中i，j为两个数据点，r为两点像素的相对深度，0表示难以判断的接近，+1表示i比j更近，-1表示i比j更远。<br>为了更有效的利用人为的打标信息，数据集中每幅图片选取一对像素点进行一次问询。作者解释说，在一幅图片上选取多个点获取其相对深度是可行的，但存在问题是往往相似的点具有相似的深度，因此在一幅图上标记多点难免产生数据冗余。<br>文章还对如何选取这唯一的一对像素点进行了探讨。有趣的实验结果如下：</p>
-<ul>
-<li>直接判定<strong>更靠近图片底部</strong>的点为较近点可以获得85.8%的预测正确率。</li>
-<li>同一水平线上的两个点，直接判定<strong>更靠近中心点</strong>的点为较近的点可以获得71.4%的预测正确率。<br>因此本文作者选取的方式为：选取同一水平线上距离中心点距离相同(左右对称)的两个点。用这样的选取方式选取的两个点，左边的点为较近点的概率为50.3%。</li>
-</ul>
-<p><strong>通过相对深度预测绝对深度</strong><br>这部分也比较有意思，以我的理解，作者的意思是说假如数据集足够大只需要一个能够拟合相对深度的网络就可以预测绝对深度。是不是说一幅图片如果相对深度能够确定，自然可以确定绝对深度呢？<br>作者提出的Loss缺失没有依赖绝对深度，而是只根据相对深度。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth7_diw_eq.png" alt="Loss"><br>上图为文章提出的Loss，若两个点的相对深度关系为“接近”时Loss让两个点的绝对深度更加接近，反之则让两个点的绝对深度之间具有较大差距。<br>通过实验发现先在NYU Depth数据集上训练然后在DIW数据集上进行Refine得到的网络具有最优的预测表现。</p>
-<hr>
-<h4 id="Size-to-Depth-A-New-Perspective-for-Single-Image-Estimation-CVPR-2018"><a href="#Size-to-Depth-A-New-Perspective-for-Single-Image-Estimation-CVPR-2018" class="headerlink" title="Size to Depth: A New Perspective for Single Image Estimation, CVPR, 2018"></a>Size to Depth: A New Perspective for Single Image Estimation, CVPR, 2018</h4><p>上一篇文章有一个主要的问题就是同样的图片可能会对应完全不同的距离值，假设同一部相机在不同距离拍摄相同场景的情况。这篇文章针对这种问题，提出size to depth的方法。<br>文章中提到了两个很有趣的实验：</p>
-<ul>
-<li>从2D图片判断绝对深度：被试验者犹豫的时间较长，且结果有21%的相对误差。</li>
-<li>从2D图片中判断物体尺寸： 被试验者犹豫的时间较短，且结果只有8%的相对误差。<br>我个人理解，犹豫时间可以表达人类在这方面能力的强弱，因此人类由于先验知识的影响，判断物体尺寸的能力远远好于判断距离的能力。</li>
-</ul>
-<p>Size to Depth，根据画面内物体的size信息推测深度。具体过程首先是把图片分割成小块(pitch)为每个pitch设定一个size，这个size由人工标注，size的值为pitch中的主要物体(dominant component)的实际大小，最后用CRF进行平滑。<br>CRF的研究不算多，可能是因为CRF的复杂度比较高而且会影响到输出size的原因。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth7_size_eq.png" alt="Loss"><br>上面公式为文章使用的energy function，其中第一部分的目标是缩小预测值与标记值的差异，第二部分是consistency约束。</p>
+<h3 id="单目图像深度估计-SLAM辅助篇：MegaDepth"><a href="#单目图像深度估计-SLAM辅助篇：MegaDepth" class="headerlink" title="单目图像深度估计 - SLAM辅助篇：MegaDepth"></a>单目图像深度估计 - SLAM辅助篇：MegaDepth</h3><p>今天的论文笔记是关于以下这篇Paper：<br>[1] MegaDepth-Learning Single-View Depth Prediction from Internet Photos, CVPR, 2018 [<a href="http://www.cs.cornell.edu/projects/megadepth/" target="_blank" rel="noopener">Project Page</a>]<br>CVPR的单目深度估计论文有很多，粗略的看了一圈，决定写这篇。之前的博客里写到过说目前所有的计算机视觉相关的深度学习方法都有一个共同的问题——对数据集的依赖。在单目图像深度估计来看呢，就是基于室内数据集NYUDepth训练出来的模型在室外数据集KITTI、CitiScape里表现不好，反之亦然。与此同时，目前的数据集还存在很多其他不足比如场景单一(NYU)，训练集规模小（Make3D），采样稀疏（KITTI）。<br>为了解决这些问题，作者提出一个全新的思路：</p>
+<p><strong>用来源于网络的多张景点图像通过建模算法进行三维建模，从而得到对应的深度预测值，通过对预测值进行一系列优化（如划分临时物体（如游客），根据语义分割将前景、背景和天空单列处理等），用优化后的数据训练深度预测网络，通过结合梯度、尺度不变和相对深度的loss进行网络训练。</strong></p>
+<p>总结的还不够精炼，我认为loss方面就是将现在比较流行的方法大杂烩了一下，更有创新的是作者利用网络图片的思路。<br>因为某一热门景点的照片，通过tag可以轻松的在网络上找到，而且照片来源的多样性保证了照片角度的丰富性，更适用于放在三维建模算法里进行建模，文章中用到的建模软件为COLMAP。面临的问题就是网络照片中的随机内容，比如景点照中的行人，甚至以景点为tag的自拍。</p>
+<h4 id="数据集建立"><a href="#数据集建立" class="headerlink" title="数据集建立"></a>数据集建立</h4><p>首先在Flickr上收集Landmarks10K数据集中的地标对应的图片，然后用SfM(structure from motion)和MVS(multi-view stereo)方法进行3D建模，建模后获取到的是景点的模型和建模时使用的每张图片对应的深度图。<br>但得到的原始深度图有很多噪声点和异常值，因此要对深度图进行优化，优化分为以下两个步骤：</p>
+<ol>
+<li>改进MVS算法，在每一步迭代时对比像素深度更改，限制只能进行小范围的更改，并且附加中值滤波去除不稳定的深度值。提出这个优化的原因是在COLMAP的MVS过程中，算法设计为了保证geometric consistency，因此对于一些存在前景比如游客的照片，在迭代的过程中会把前景深度同化成背景的深度，造成数据出错。</li>
+<li>利用语义分割生成序列深度（相对深度）信息。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_refine_MVS.png" alt="Refine MVS"></p>
+<p>具体解释一下第二个步骤。<br>由于multi-view stereo方法不擅长处理临时物体（行人、汽车）和难以建模的物体（杆、信号灯、天空区域），但这些难以识别的物体可以在语义上进行分割和提取。作者使用语义信息做了以下三个处理：</p>
+<ol>
+<li>Semantic filtering:去除MVS得到的不准确前景(foreground)深度信息。用<strong>PSPNet</strong>对图像进行语义分割，将像素分为前景（喷泉、雕塑、游客）、背景（建筑、塔、山）和天空三类。</li>
+<li>Euclidean vs. ordinal depth:以语义为标准对图片进行分类，划分为euclidean depth data和ordinal depth data。通过阈值判断在建模过程中重建的（reconstructed）像素的比例，大于30%的图片认为是有效的图片，可以用于进行Euclidean估计，这样可以排除自拍的照片，因为自拍中建筑物占比较小；</li>
+<li>Automatic ordinal depth labeling:利用语义标签自动标记前后深度序列信息。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_auto_ordinal.png" alt="Auto Ordinal"></p>
+<h4 id="Loss组成"><a href="#Loss组成" class="headerlink" title="Loss组成"></a>Loss组成</h4><p>文章的loss分为三个部分，分别是尺度不变loss，多尺度梯度loss和相对序数关系loss，公式如下：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_loss.png" alt="Loss"></p>
+<h4 id="总结和思考"><a href="#总结和思考" class="headerlink" title="总结和思考"></a>总结和思考</h4><p>这片文章找到了网络图片利用的一个突破口，网络图片的数量巨大，但是缺少对应的深度标签，由于深度网络对数据的依赖，有效的利用大量的网络数据可以提高预测模型的表现能力。但问题同样存在，因为深度估计建立在MVS等算法基础上，有了中间商赚差价导致最终的结果不能超过MVS生成的图像。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cji1i2qq0000ij48unoxbw7gq" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cji1i2qq2000lj48u5oep9g3g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -137,19 +136,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/06/05/Monocular-Depth-Estimation-8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Monocular Depth Estimation 8
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/27/Monocular-Depth-Estimation-6/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/05/28/Monocular-Depth-Estimation-7/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Monocular Depth Estimation 6</div>
+      <div class="article-nav-title">Monocular Depth Estimation 7</div>
     </a>
   
 </nav>
