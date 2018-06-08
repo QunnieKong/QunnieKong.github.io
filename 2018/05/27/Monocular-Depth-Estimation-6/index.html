@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_comp.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_eq.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth6_lr_loss.png">
-<meta property="og:updated_time" content="2018-06-05T09:44:34.829Z">
+<meta property="og:updated_time" content="2018-06-08T07:09:30.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Monocular Depth Estimation 6">
 <meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
@@ -103,7 +103,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
 <li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
 <h3 id="单目图像深度估计-6-无监督篇：Left-Right-Consistency-amp-Ego-Motion"><a href="#单目图像深度估计-6-无监督篇：Left-Right-Consistency-amp-Ego-Motion" class="headerlink" title="单目图像深度估计 - 6. 无监督篇：Left-Right Consistency &amp; Ego Motion"></a>单目图像深度估计 - 6. 无监督篇：Left-Right Consistency &amp; Ego Motion</h3><p>近几年有关单目图像深度识别的算法以CNN为主流，更细的说是以无监督的同时对深度、计算机角度、光流等同时计算的端到端深度网络为主流。<br>所谓无监督其实是指在训练过程中不需要输入真实的深度值，这样做有一个好处就是目前能够测量到深度信息的传感器还不够精确，因此由不够精确的label训练出的model得到的预测结果必然不会特别令人满意；<br>所谓同时计算呢，在我理解是指在训练过程中，用一个能够表征时间序列上有前后关系的帧之间的差别的loss同时训练多个网络，而在得到model后每个网络可以单独使用。<br>很聪明，不同作用的网络相当于人为的特征提取过程，最后的预测基于这个人为的特征提取结果，但这种方法也有其缺点，我能想到的就是参数的增加，网络结构的复杂化和人为特征对最终预测结果有没有起引导作用只能用实验去证明。</p>
@@ -132,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cji1i2qpv000gj48uexeqrund" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cji5ndiv9000j7k8u7xk01aw0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -206,6 +206,10 @@
       <ul>
         
           <li>
+            <a href="/2018/06/07/Monocular-Depth-Estimation-9/">Monocular Depth Estimation 9</a>
+          </li>
+        
+          <li>
             <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
           </li>
         
@@ -219,10 +223,6 @@
         
           <li>
             <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
           </li>
         
       </ul>

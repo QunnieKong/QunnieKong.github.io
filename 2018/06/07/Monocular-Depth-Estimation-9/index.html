@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Monocular Depth Estimation 9 | KDQ&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
+<meta name="keywords" content="Monocular Depth Estimation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monocular Depth Estimation 9">
+<meta property="og:url" content="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/index.html">
+<meta property="og:site_name" content="KDQ&#39;s Blog">
+<meta property="og:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics_graph.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval5.png">
+<meta property="og:updated_time" content="2018-06-08T07:09:35.108Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monocular Depth Estimation 9">
+<meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KDQ&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://qunniekong.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Monocular-Depth-Estimation-9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/07/Monocular-Depth-Estimation-9/" class="article-date">
+  <time datetime="2018-06-07T01:10:50.000Z" itemprop="datePublished">2018-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Monocular Depth Estimation 9
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">入门篇：图像深度估计相关总结</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/">应用篇：Learning to be a Depth Camera</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/">尺度篇：Make3D</a></li>
+<li><a href="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/">迁移篇：Depth Extraction from Video Using Non-parametric Sampling</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/">方法比较篇：Evaluation of CNN-based Methods</a></li>
+</ol>
+<hr>
+<h3 id="单目图像深度估计-方法比较篇：Evaluation-of-CNN-based-Methods"><a href="#单目图像深度估计-方法比较篇：Evaluation-of-CNN-based-Methods" class="headerlink" title="单目图像深度估计 - 方法比较篇：Evaluation of CNN-based Methods"></a>单目图像深度估计 - 方法比较篇：Evaluation of CNN-based Methods</h3><p>今天的论文阅读笔记是关于以下这篇论文：<br>[1] Evaluation of CNN-based Single-Image Depth Estimation Methods, CVPR, 2018<br>这篇文章提出了一个新的数据集，分析了已有CNN单目图像深度估计算法存在的问题，并且实验对比了已有的经典算法，可以算是一篇小综述。</p>
+<p>写完这篇阅读笔记，深度估计这一系列就告一段落，接下来希望抛开理论多做一些实验。<br>单目图像深度估计的研究热度是逐渐升高的，越是近期相关的Paper越多，就在我写这篇Blog的同时发现了一篇自监督的论文号称达到了目前最好的正确率…但因为这个问题本身就是个ill-posed的问题，所以目前的方法各有优劣，不存在十全十美的方法，还是有改进空间的。</p>
+<p>2018 CVPR的这篇文章给单目深度估计一个简称叫SIDE(Single-Image Depth Estimation)，作者指出SIDE相关的研究本身具有重要意义，体现在自动驾驶、机器人导航、增强现实等大火方向的应用。但是目前的方法仍然存在很多问题，比如在进行正确率计算的时候只关注全局的表现忽略了对边界等细节的要求，因此从视觉上看预测结果与输入图片相比会更模糊，缺失很多物体边界、平滑表面、对透明或纹理比较难预测的物体的预测等等。针对这些问题，作者提出了几个新的error形式，并且提出一个新的数据集，这个数据集给出了计算这些细节error需要的全部信息，最后对比了不同的方法和数据集。</p>
+<h4 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h4><p>单目图像深度估计的发展脉络大约是：在计算能力和数据集都不足的时候，大部分方法是基于人为的特征计算。比如基于三角测量的双目方法MVS(multi-view stereo)，SfM(structure from motion)，基于通道梯度的单目方法SfS(Shape of Shading)。以上三种属于passive方法，也有一些active的方法利用根据对焦和失焦或偏振(polarization cues)等线索。其他的方法有利用光场相机(light field camera)的方法等。随着RGBD数据集的出现，数据驱动的基于学习的方法超过了传统方法，尤其是利用CNN的方法。<br>第一次听说光场相机，发现这是个很有意思的技术，网络上的解释如下：<br><em>光场相机不同于一般的单一镜头、感光元件接收单一光束的原理相机，它是透过庞大的显微镜头阵列（Microlens array）记录整个光场的数值，再透过软件运算还原影像，并可随意调整对焦点再次运算出新的影像。</em><br>总之，基于大规模数据集的深度方法是目前研究的主流。</p>
+<p>目前比较成熟且常用的RGBD数据集有Make3D，Kitti，NYU depth, CityScape等。<br>作者总结了目前常用的RGBD数据集的缺点：</p>
+<ul>
+<li>Make3D和Kitti的场景受限(室外)，且深度图的分辨率很低；</li>
+<li>NYU depth v2只包含室内场景，但Kinect的有效距离范围很小，遮挡、边界等不够清晰。</li>
+</ul>
+<h4 id="Error-Metrics"><a href="#Error-Metrics" class="headerlink" title="Error Metrics"></a>Error Metrics</h4><p>现有的Error主要有以下几个：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics1.png" alt="Error Metrics"><br>然而这些都只关注了全局的一致性，在loss中并不能体现平面（如桌面和墙壁）的平整性和三维方向，以及边界和遮挡判断是否正确。因此作者提出了几个新的error：</p>
+<ol>
+<li>对不同深度区间的预测正确率进行统计</li>
+<li>平整性<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics2.png" alt="Error Metrics"><br>planarity error计算了（mask得到的）某一特定平面预测得到的三维points与实际的偏差；<br>orientation error计算了预测平面与实际平面的角度偏差，角度通过反余弦函数得到，arccos函数可以根据函数值求出弧度值。</li>
+<li>物体边界<br>在深度图中，具有前后关系的两个物体相互遮挡形成的边界可表示为梯度的迅速下降，边缘的预测是否准确决定了预测结果的细节在视觉上的细节优化。因此作者提出一种边界相关的error，首先调用structured edges提取预测图中的边界。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics3.png" alt="Error Metrics"><br>depth boundary error计算了预测的边界与实际边界之间的偏差；<br>completeness error计算了边界的完整性，即是否预测除了完整的边界。</li>
+<li>偏差纠正（偏大还是偏小）<br>传统的loss关注整幅图像的深度连续性和预测误差，但没有全局计算到底预测值是偏大还是偏小。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics4.png" alt="Error Metrics"><br>directed depth errors(DDEs)取一个标值（3m），根据深度关系进行mask后得到计算结果。</li>
+</ol>
+<p>下图是平面和边界loss的示意图。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_metrics_graph.png" alt="Error Metrics"></p>
+<h4 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h4><p>文章提出了一个新的数据集IBims-1，每幅图片包含RGBD和平面mask以及边界信息。但场景也比较单一，目前数据量还不大。</p>
+<h4 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h4><p>这部分是各种CNN方法的对比，作者选取了几个CNN模型，有经典的也有近期的，这些模型都用NYU v2进行的训练。</p>
+<ul>
+<li><p>不同深度区间的预测正确率<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval1.png" alt="Evaluations"><br>上图为[3]的方法在NYU和IBims-1两个数据集的预测误差，可以看出在深度大的地方预测误差会更大。</p>
+</li>
+<li><p>平面结构的预测<br>作者选择桌面、墙面和地面作为代表平面进行不同方法的比较，在IBims-1数据集上各方法的表现如下。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval2.png" alt="Evaluations"><br>可以看出已有方法对水平的平面预测结果较好，但对竖直平面预测结果较差。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval3.png" alt="Evaluations"><br>从表格可以看出[3]的方法得到了目前为止最小的error，但在边界和平面的预测结果不十分理想。</p>
+</li>
+<li><p>距离判断<br>实验表明，就算是达到了80%以上正确率的算法，都倾向于给出更小的预测depth，也就是说把物体预测的更近。</p>
+</li>
+<li><p>数据增强（Data Augmentation）<br>对比了水平翻转、竖直翻转、通道交换(swapping of image channels)，色彩平移(shifting the hue by some offser)等的实验结果如下：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval4.png" alt="Evaluations"><br>从表格上可以看出：</p>
+</li>
+</ul>
+<ol>
+<li>水平翻转对结果影响不大，竖直翻转error增大了60%；</li>
+<li>小范围加大曝光对结果产生很大影响，但降低曝光并未产生相同程度影响；</li>
+<li>直方图拉伸和颜色改变对预测结果影响不大。<br>同时作者提出竖直翻转对结果影响很大的原因可能是因为NYU数据集中的图片里，很大一部分pixels都是地板并且在图片的下半部分。</li>
+</ol>
+<ul>
+<li>有纹理的平面<br>这个实验很有趣，作者将纹理和图像打印出来贴在墙上，让CNN对其进行深度预测，结果如下图：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth9_eval5.png" alt="Evaluations"><br>可以看出，梯度对深度的预测起到了很重要的影响，所有网络都没能预测出正确的深度。其实这也反映了深度估计的ill，就算是人类站在一张照片前，如果没有充分理解这是一张照片的话，也有可能错误估计其中物体的距离吧。</li>
+</ul>
+<h4 id="总结与思考"><a href="#总结与思考" class="headerlink" title="总结与思考"></a>总结与思考</h4><p>写完这篇文章，深度估计相关的阅读笔记就告一段落，小小的松了一口气。<br>从一点也不了解，到现在稍稍摸到了一点门道，越学习越发现自己知道的少。<br>今天看到新闻说Face book的技术路线是机器学习优先的，在不是必要的情况下不会选择更复杂的深度学习算法，这好像解决了我心里一直以来的一个疑问：在真正应用的时候是选取快速但结果比较粗糙的经典机器学习方法还是选正确率更高但复杂的多的深度方法。<br>据我现在的了解，深度学习还远远没到大众都可以使用的程度，经费充足的项目和大学可以发更多的Paper，因为他们有巨大的计算等资源。在不考虑硬件发展的情况下，这些基于庞大运算量的正确率高达98%的算法真的是商业应用的出路吗？可能能够拉来投资，但是用起来有多闹心只有自己知道吧。<br>扯多了，总之我还是觉得简单才是真正的优雅，希望以后自己不会跑偏。</p>
+<p>[2]Dollar et al, Fast edge detection using structured forests, IEEE trans, 2015<br>[3]Li et al, A two-streamed network for estimation fine-scaled depth maps from single rgb images, CVPR,2017</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/" data-id="cji5ndivf000o7k8unbxx166a" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/05/Monocular-Depth-Estimation-8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Monocular Depth Estimation 8</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/07/Monocular-Depth-Estimation-9/">Monocular Depth Estimation 9</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 KDQ<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

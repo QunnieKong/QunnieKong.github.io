@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_refine_MVS.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_auto_ordinal.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth8_loss.png">
-<meta property="og:updated_time" content="2018-06-05T09:45:01.428Z">
+<meta property="og:updated_time" content="2018-06-08T07:08:24.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Monocular Depth Estimation 8">
 <meta name="twitter:description" content="入门篇：图像深度估计相关总结 应用篇：Learning to be a Depth Camera 尺度篇：Make3D 迁移篇：Depth Extraction from Video Using Non-parametric Sampling 深度篇：David Eigen 无监督篇：Left-Right Consistency &amp;amp; Ego Motion 相对深度篇：Depth in t">
@@ -100,7 +100,7 @@
 <li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
 <li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
 <li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">方法比较篇：Evaluation of CNN-based Methods</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/">方法比较篇：Evaluation of CNN-based Methods</a></li>
 </ol>
 <hr>
 <h3 id="单目图像深度估计-SLAM辅助篇：MegaDepth"><a href="#单目图像深度估计-SLAM辅助篇：MegaDepth" class="headerlink" title="单目图像深度估计 - SLAM辅助篇：MegaDepth"></a>单目图像深度估计 - SLAM辅助篇：MegaDepth</h3><p>今天的论文笔记是关于以下这篇Paper：<br>[1] MegaDepth-Learning Single-View Depth Prediction from Internet Photos, CVPR, 2018 [<a href="http://www.cs.cornell.edu/projects/megadepth/" target="_blank" rel="noopener">Project Page</a>]<br>CVPR的单目深度估计论文有很多，粗略的看了一圈，决定写这篇。之前的博客里写到过说目前所有的计算机视觉相关的深度学习方法都有一个共同的问题——对数据集的依赖。在单目图像深度估计来看呢，就是基于室内数据集NYUDepth训练出来的模型在室外数据集KITTI、CitiScape里表现不好，反之亦然。与此同时，目前的数据集还存在很多其他不足比如场景单一(NYU)，训练集规模小（Make3D），采样稀疏（KITTI）。<br>为了解决这些问题，作者提出一个全新的思路：</p>
@@ -125,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cji1i2qq2000lj48u5oep9g3g" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cji5ndivc000m7k8uol8lbzic" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -135,6 +135,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/06/07/Monocular-Depth-Estimation-9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Monocular Depth Estimation 9
+        
+      </div>
+    </a>
   
   
     <a href="/2018/05/28/Monocular-Depth-Estimation-7/" id="article-nav-older" class="article-nav-link-wrap">
@@ -190,6 +199,10 @@
       <ul>
         
           <li>
+            <a href="/2018/06/07/Monocular-Depth-Estimation-9/">Monocular Depth Estimation 9</a>
+          </li>
+        
+          <li>
             <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
           </li>
         
@@ -203,10 +216,6 @@
         
           <li>
             <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
           </li>
         
       </ul>
