@@ -65,6 +65,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SSH-for-Windows" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/02/SSH-for-Windows/" class="article-date">
+  <time datetime="2018-01-02T02:32:35.000Z" itemprop="datePublished">2018-01-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/02/SSH-for-Windows/">SSH for Windows</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Windows7进行SSH连接"><a href="#Windows7进行SSH连接" class="headerlink" title="Windows7进行SSH连接"></a>Windows7进行SSH连接</h3><p>最近尝试在GPU服务器上运行深度网络的推断，因为我的电脑为Windows 7系统，所以用到了Windows和Linux进行SSH通信的一些方法，在此记录一下。</p>
+<ol>
+<li>连接服务器<ul>
+<li>Windows进行SSH连接需要使用特定软件，我下载的是PUTTY，一款小巧的软件，可以建立连接，连接成功后界面相当于Linux的控制台。</li>
+<li>连接方法：<br>  打开PUTTY，输入服务器的地址，默认SSH端口为22，点击open后提示输入用户名，回车之后输入密码即可。</li>
+<li>常用命令：<br>  记几个Linux中常用的命令：<br>  1) pwd —— 显示当前地址<br>  2) cd 地址 —— 地址跳转<br>  3）ifconfig —— 显示网络信息<br>  4）rm 文件名 —— 删除文件<br>  5）mkdir —— 创建地址、文件夹<br>  6）ls —— 显示当前目录下的所有文件及文件夹<br>  7）nvidia-sim —— 显示显卡使用情况</li>
+</ul>
+</li>
+<li>上传、下载文件<ul>
+<li>文件操作需要使用PUTTY中的PSFTP软件，打开软件以后输入指令open 服务器地址，系统提示输入用户名，回车后输入密码则显示连接成功。文件上传和下载时需要注意确定当前路径是否正确。</li>
+<li>上传文件：<br>  1) 上传文件夹：需要-r表示递归<pre><code>put -r c:/Users/Desktop/abc —— abc为文件夹名
+</code></pre>  2) 上传文件：<pre><code>put c:/Users/Desktop/a.jpg
+</code></pre></li>
+<li>下载文件：<br>  1) 首先需要设定下载到本地的存储目录：<pre><code>lcd c:/Users/Desktop
+</code></pre>  2）get 文件名</li>
+</ul>
+</li>
+<li>注意事项<ul>
+<li>如果两次上传的文件名相同，则默认覆盖已有文件且不进行报错，可能会造成文件损失</li>
+<li>下载文件时如果不指定本地位置(lcd指令)则会报unable to open错误</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/" data-id="cjnjotz82000sf08ucgpeef9c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Install-OpenCV-on-Raspberry-Pi" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" class="article-date">
@@ -164,9 +225,11 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="cjio939ip0000o08ui6xl2t2o" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="cjnjotz6z0003f08ufjbcg7id" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li></ul>
+
     </footer>
   </div>
   
@@ -231,7 +294,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/12/13/Tensorflow-Install-With-Anaconda/" data-id="cjio939ka0015o08uln55j2lu" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/12/13/Tensorflow-Install-With-Anaconda/" data-id="cjnjotz86000xf08uhijijjmc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
@@ -313,7 +376,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/" data-id="cjio939k0000to08urtuebntn" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/" data-id="cjnjotz7z000pf08uay70i3by" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
@@ -365,7 +428,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cjio939j50004o08u234xfw4w" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cjnjotz730005f08uskskl7mf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
@@ -417,10 +480,62 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cjio939j10002o08u8xy4dgrh" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cjnjotz710004f08uhl3009bq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hexo-Blog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/09/Hexo-Blog/" class="article-date">
+  <time datetime="2016-07-09T08:07:53.000Z" itemprop="datePublished">2016-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/09/Hexo-Blog/">Hexo Blog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>想实现一个博客的原因是看到了这个项目–&gt;<a href="https://github.com/nswbmw/N-blog/wiki/%E7%AC%AC1%E7%AB%A0--%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%8D%9A%E5%AE%A2" target="_blank" rel="noopener">一个简单的博客</a>是用Node.js+Express+MongoDB实现的有登录功能的博客，缺点就是界面过于简单了。<br>我想到个人博客的内容并不多，这个登录功能像是完全为了学习MongoDB才硬加上去的，那么有没有界面好看又不用连接数据库的简单的个人博客，于是发现了以下几种：</p>
+<ul>
+<li>Webpress</li>
+<li>JekyII + Github pages</li>
+<li>Hexo + Github pages</li>
+</ul>
+<p>然后因为JekyII基于Ruby我的电脑并没有装Ruby，而用到github pages的话气氛上是更适合程序员的感觉于是就选择了Hexo。</p>
+<p>步骤比较简单，但还是花费了一下午时间，现在总结如下：<br>利用Hexo + Gitpages建立blog拢共分三步：</p>
+<ol>
+<li>各种下载 Node.js,Git</li>
+<li>建立/username.github.io/仓库</li>
+<li>部署Hexo</li>
+</ol>
+<p>然后就可以写文章啦，需要使用Markdown语法，很新鲜，挺有意思。<br>目前就做到这，更加深入的研究使用留在日后再说吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cjnjotz6u0001f08uqxy9fht0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
 
     </footer>
   </div>
@@ -472,59 +587,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cjio939ix0001o08ux85p29u4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hexo-Blog" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/09/Hexo-Blog/" class="article-date">
-  <time datetime="2016-07-09T08:07:53.000Z" itemprop="datePublished">2016-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/09/Hexo-Blog/">Hexo Blog</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>想实现一个博客的原因是看到了这个项目–&gt;<a href="https://github.com/nswbmw/N-blog/wiki/%E7%AC%AC1%E7%AB%A0--%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%8D%9A%E5%AE%A2" target="_blank" rel="noopener">一个简单的博客</a>是用Node.js+Express+MongoDB实现的有登录功能的博客，缺点就是界面过于简单了。<br>我想到个人博客的内容并不多，这个登录功能像是完全为了学习MongoDB才硬加上去的，那么有没有界面好看又不用连接数据库的简单的个人博客，于是发现了以下几种：</p>
-<ul>
-<li>Webpress</li>
-<li>JekyII + Github pages</li>
-<li>Hexo + Github pages</li>
-</ul>
-<p>然后因为JekyII基于Ruby我的电脑并没有装Ruby，而用到github pages的话气氛上是更适合程序员的感觉于是就选择了Hexo。</p>
-<p>步骤比较简单，但还是花费了一下午时间，现在总结如下：<br>利用Hexo + Gitpages建立blog拢共分三步：</p>
-<ol>
-<li>各种下载 Node.js,Git</li>
-<li>建立/username.github.io/仓库</li>
-<li>部署Hexo</li>
-</ol>
-<p>然后就可以写文章啦，需要使用Markdown语法，很新鲜，挺有意思。<br>目前就做到这，更加深入的研究使用留在日后再说吧。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cjio939jc0009o08u1xxxz6vs" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cjnjotz6k0000f08uqyaor783" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
@@ -554,7 +617,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
     </div>
   </div>
 
@@ -564,7 +627,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
     </div>
   </div>
 
@@ -573,7 +636,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
     </div>
   </div>
 
@@ -584,6 +647,10 @@ export http_proxy no_proxy
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/10/22/Opencv-Cross-Compile/">OpenCV Cross Compile</a>
+          </li>
         
           <li>
             <a href="/2018/06/07/Monocular-Depth-Estimation-9/">Monocular Depth Estimation 9</a>
@@ -599,10 +666,6 @@ export http_proxy no_proxy
         
           <li>
             <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/22/Monocular-Depth-Estimation-5/">Monocular Depth Estimation 5</a>
           </li>
         
       </ul>

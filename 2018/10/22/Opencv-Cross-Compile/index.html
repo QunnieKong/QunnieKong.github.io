@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OpenCV Cross Compile | KDQ&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="OpenCV交叉编译最近接触了一下板子上的图像处理，完全是从0开始，所以很长一段时间都处于迷茫的自学阶段，不断重复掉坑爬坑掉坑爬坑的过程，心好累然而也没做出什么满意的东西。这里总结一下里面比较重要的一个环节，OpenCV的交叉编译。  参考：OpenCV在Hi3516的编译  准备工作从准备工作开始就踩了超多的坑，板子的开发真的好难（流下了宽宽的泪水）。一开始是在网络上的虚拟机搞，这个虚拟机虽说是">
+<meta name="keywords" content="OpenCV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV Cross Compile">
+<meta property="og:url" content="https://qunniekong.github.io/2018/10/22/Opencv-Cross-Compile/index.html">
+<meta property="og:site_name" content="KDQ&#39;s Blog">
+<meta property="og:description" content="OpenCV交叉编译最近接触了一下板子上的图像处理，完全是从0开始，所以很长一段时间都处于迷茫的自学阶段，不断重复掉坑爬坑掉坑爬坑的过程，心好累然而也没做出什么满意的东西。这里总结一下里面比较重要的一个环节，OpenCV的交叉编译。  参考：OpenCV在Hi3516的编译  准备工作从准备工作开始就踩了超多的坑，板子的开发真的好难（流下了宽宽的泪水）。一开始是在网络上的虚拟机搞，这个虚拟机虽说是">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-10-22T02:33:59.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV Cross Compile">
+<meta name="twitter:description" content="OpenCV交叉编译最近接触了一下板子上的图像处理，完全是从0开始，所以很长一段时间都处于迷茫的自学阶段，不断重复掉坑爬坑掉坑爬坑的过程，心好累然而也没做出什么满意的东西。这里总结一下里面比较重要的一个环节，OpenCV的交叉编译。  参考：OpenCV在Hi3516的编译  准备工作从准备工作开始就踩了超多的坑，板子的开发真的好难（流下了宽宽的泪水）。一开始是在网络上的虚拟机搞，这个虚拟机虽说是">
+  
+    <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KDQ&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://qunniekong.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Opencv-Cross-Compile" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/22/Opencv-Cross-Compile/" class="article-date">
+  <time datetime="2018-10-22T01:12:32.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenCV Cross Compile
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="OpenCV交叉编译"><a href="#OpenCV交叉编译" class="headerlink" title="OpenCV交叉编译"></a>OpenCV交叉编译</h3><p>最近接触了一下板子上的图像处理，完全是从0开始，所以很长一段时间都处于迷茫的自学阶段，不断重复掉坑爬坑掉坑爬坑的过程，心好累然而也没做出什么满意的东西。<br>这里总结一下里面比较重要的一个环节，OpenCV的交叉编译。</p>
+<ul>
+<li>参考：<a href="http://bbs.ebaina.com/thread-4858-1-1.html" target="_blank" rel="noopener">OpenCV在Hi3516的编译</a></li>
+</ul>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>从准备工作开始就踩了超多的坑，板子的开发真的好难（流下了宽宽的泪水）。<br>一开始是在网络上的虚拟机搞，这个虚拟机虽说是linux但是是64位，linux里64位和32位有好多包是不同的，所以在版本匹配上走了好多好多弯路，而且因为公司的网络比较复杂，所以虚拟机和板子是没办法ping通的，最后还是放弃了这个在自己电脑上搭了一个新的。本地虚拟机的优点就是很好ping通，缺点就是我的小电脑亚历山大，根本不敢装图形界面。<br>装好虚拟机以后就作以下两件事：</p>
+<ol>
+<li><p>安装交叉编译器<br>由于用的是华为海思的开发板，因此使用海思SDK中提供的交叉编译器，编译器的安装步骤如下：<br>1）进入Hi3516A_SDK_Vx.x.x.x/osdrv/opensource/toolchain/arm-hisiv300-linux目录，arm-hisiv300-linux.tar.bz2如果没有抽取则抽取到此处，运行chmod +x cross.v300.install，然后运行./cross.v300.install即可。<br>2) 执行source /etc/profile， 安装交叉编译器的脚本配置的环境变量就可以生效了，或者请重新登陆也可。<br>3) 安装好的交叉编译器一般在/opt目录下。</p>
+</li>
+<li><p>安装CMake<br>1) 网站下载代码<a href="https://cmake.org/download/" target="_blank" rel="noopener">https://cmake.org/download/</a><br>2) 解压到~/目录 tar -xvf cmake-3.11.0-Linux-x86_64.tar.gz<br>3) 为cmake创建连接   sudo ln -s ~/cmake-3.11.0-Linux-x86_64/bin/* /usr/bin/<br>4) 测试 cmake –version</p>
+</li>
+</ol>
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p>这个过程用六个字来概括就是“尽人事，听天命”，过程中会出现超多的莫名其妙的报错，有的居然通过重启虚拟机就可以解决，百思不得其解啊。<br>以下为复制别人的内容，因为这个过程漫长又不可控，所以我自己的记录比较少，我在编译过程中遇见的问题会在最后一部分总结以下，这部分就写一下如果不出错流程会是怎样：<br>1、修改cmake文件<br>在源码的platforms下已经有对各平台的交叉编译支持，我们只需要做一些简单的修改。<br>[zzz@localhost platforms]$ pwd<br>/home/zzz/software/opencv-3.1.0/platforms<br>[zzz@localhost platforms]$ ll<br>total 28<br>drwxr-xr-x. 4 zzz zzz 4096 Dec 18 23:02 android<br>drwxr-xr-x. 3 zzz zzz 4096 Dec 18 23:02 ios<br>drwxr-xr-x. 4 zzz zzz 4096 Jan 22 17:24 linux<br>drwxr-xr-x. 2 zzz zzz 4096 Dec 18 23:02 osx<br>-rw-r–r–. 1 zzz zzz  323 Dec 18 23:02 readme.txt<br>drwxr-xr-x. 2 zzz zzz 4096 Dec 18 23:02 scripts<br>drwxr-xr-x. 2 zzz zzz 4096 Dec 18 23:02 winrt</p>
+<p>我们的目标是交叉编译到arm上，那么就进入到linux下：<br>[zzz@localhost linux]$ pwd<br>/home/zzz/software/opencv-3.1.0/platforms/linux<br>[zzz@localhost linux]$ ll<br>total 20<br>-rw-r–r–.  1 zzz zzz 4196 Jan 22 16:35 arm-gnueabi.toolchain.cmake<br>…<br>arm-gnueabi.toolchain.cmake指明了交叉编译的一些路径等设置，我们根据实际情况对其进行适当修改：<br>set(CMAKE_SYSTEM_NAME Linux)<br>set(CMAKE_SYSTEM_VERSION 1)<br>set(CMAKE_SYSTEM_PROCESSOR arm-hisiv300-linux-gnueabi)<br>set(GCC_COMPILER_VERSION “4.6” CACHE STRING “GCC Compiler version”)<br>set(FLOAT_ABI_SUFFIX “”)<br>if (NOT SOFTFP)<br>    set(FLOAT_ABI_SUFFIX “hf”)<br>endif()<br>#CROSS COMPILE SETTING<br>set(TOOLCHAIN_DIR “/opt/hisi-linux/x86-arm/arm-hisiv300-linux/“)<br>set(CMAKE_C_COMPILER “/opt/hisi-linux/x86-arm/arm-hisiv300-linux/bin/arm-hisiv300-linux-uclibcgnueabi-gcc”)<br>set(CMAKE_CXX_COMPILER “/opt/hisi-linux/x86-arm/arm-hisiv300-linux/bin/arm-hisiv300-linux-uclibcgnueabi-g++”)<br>set(CMAKE_FIND_ROOT_PATH /opt/hisi-linux/ /opt/hisi-linux/x86-arm/arm-hisiv300-linux/)<br>set(ARM_LINUX_SYSROOT /opt/hisi-linux/x86-arm/arm-hisiv300-linux/ CACHE PATH “ARM cross compile system root”)<br>            MESSAGE(STATUS “This is cross compile dir —&gt;”$(CMAKE_C_COMPILER))</p>
+<pre><code>#find_program(CMAKE_C_COMPILER NAMES arm-linux-gnueabi${FLOAT_ABI_SUFFIX}-gcc-${GCC_COMPILER_VERSION})
+</code></pre><p>#find_program(CMAKE_CXX_COMPILER NAMES arm-linux-gnueabi${FLOAT_ABI_SUFFIX}-g++-${GCC_COMPILER_VERSION})<br>#set(ARM_LINUX_SYSROOT /usr/arm-linux-gnueabi${FLOAT_ABI_SUFFIX} CACHE PATH “ARM cross compilation system root”)</p>
+<pre><code>#set(CMAKE_CXX_FLAGS           &quot;&quot;                    CACHE STRING &quot;c++ flags&quot;)
+</code></pre><p>#set(CMAKE_C_FLAGS             “”                    CACHE STRING “c flags”)<br>#set(CMAKE_SHARED_LINKER_FLAGS “”                    CACHE STRING “shared linker flags”)<br>#set(CMAKE_MODULE_LINKER_FLAGS “”                    CACHE STRING “module linker flags”)<br>#set(CMAKE_EXE_LINKER_FLAGS    “-Wl,-z,nocopyreloc”  CACHE STRING “executable linker flags”)<br>            set(CMAKE_CXX_FLAGS “${CMAKE_CXX_FLAGS} -mthumb -fdata-sections -Wa,–noexecstack -fsigned-char -Wno-psabi”)<br>set(CMAKE_C_FLAGS   “${CMAKE_C_FLAGS} -mthumb -fdata-sections -Wa,–noexecstack -fsigned-char -Wno-psabi”)<br>            set(CMAKE_SHARED_LINKER_FLAGS “-Wl,–fix-cortex-a8 -Wl,–no-undefined -Wl,–gc-sections -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now ${CMAKE_SHARED_LINKER_FLAGS}”)<br>set(CMAKE_MODULE_LINKER_FLAGS “-Wl,–fix-cortex-a8 -Wl,–no-undefined -Wl,–gc-sections -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now ${CMAKE_MODULE_LINKER_FLAGS}”)<br>set(CMAKE_EXE_LINKER_FLAGS    “-Wl,–fix-cortex-a8 -Wl,–no-undefined -Wl,–gc-sections -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now ${CMAKE_EXE_LINKER_FLAGS}”)<br>            if(USE_NEON)<br>  message(WARNING “You use obsolete variable USE_NEON to enable NEON instruction set. Use -DENABLE_NEON=ON instead.” )<br>  set(ENABLE_NEON TRUE)<br>elseif(USE_VFPV3)<br>  message(WARNING “You use obsolete variable USE_VFPV3 to enable VFPV3 instruction set. Use -DENABLE_VFPV3=ON instead.” )<br>  set(ENABLE_VFPV3 TRUE)<br>endif()</p>
+<pre><code>        #set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${ARM_LINUX_SYSROOT})
+        if(EXISTS ${CUDA_TOOLKIT_ROOT_DIR})
+set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
+</code></pre><p>endif()<br>            set( CMAKE_SKIP_RPATH TRUE CACHE BOOL “If set, runtime paths are not added when using shared libraries.” )<br>set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)<br>set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)<br>set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY)</p>
+<pre><code># macro to find programs on the host OS
+</code></pre><p>macro( find_host_program )<br> set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER )<br> set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER )<br> set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER )<br> if( CMAKE_HOST_WIN32 )<br>  SET( WIN32 1 )<br>  SET( UNIX )<br> elseif( CMAKE_HOST_APPLE )<br>  SET( APPLE 1 )<br>  SET( UNIX )<br> endif()<br> find_program( ${ARGN} )<br> SET( WIN32 )<br> SET( APPLE )<br> SET( UNIX 1 )<br> set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )<br> set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY )<br> set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY )<br>endmacro()</p>
+<pre><code># macro to find packages on the host OS
+</code></pre><p>macro( find_host_package )<br> set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER )<br> set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER )<br> set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER )<br> if( CMAKE_HOST_WIN32 )<br>  SET( WIN32 1 )<br>  SET( UNIX )<br> elseif( CMAKE_HOST_APPLE )<br>  SET( APPLE 1 )<br>  SET( UNIX )<br> endif()<br> find_package( ${ARGN} )<br> SET( WIN32 )<br> SET( APPLE )<br> SET( UNIX 1 )<br> set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )<br> set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY )<br> set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY )<br>endmacro()<br>2、交叉编译<br>设置好了以后，开始进行交叉编译：<br>建立好执行cmake的路径:build_softfp，建立好编译后的安装路径：install_dir<br>[zzz@localhost linux]$ ll<br>total 20<br>-rw-r–r–.  1 zzz zzz 4196 Jan 22 16:35 arm-gnueabi.toolchain.cmake<br>drwxrwxr-x. 15 zzz zzz 4096 Jan 22 16:38 build_softfp<br>drwxrwxr-x.  6 zzz zzz 4096 Jan 22 15:51 install_dir<br>执行：<br>[zzz@localhost build_softfp]$ pwd<br>/home/zzz/software/opencv-3.1.0/platforms/linux/build_softfp<br>[zzz@localhost build_softfp]$ cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=../install_dir/ -D SOFTFP=ON -D ENABLE_NEON=ON -D CMAKE_TOOLCHAIN_FILE=../arm-gnueabi.toolchain.cmake ../../../<br>等待10几分钟。</p>
+<h4 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h4><ol>
+<li>make报错提示“No suitable threading library available”: 定位到common.cc文件，头文件首行加上#define HAVE_PTHREAD</li>
+<li>提示找不到bits/auxv.h: 搜索发现在/usr/include/x86_64-linux-gun/bits/auxv.h,更改对应文件的include</li>
+<li>查看arm-linux-gcc编译器的版本arm-linux-gcc -v时报错bin/.arm-none-linux-gnueabi-gcc: not found：<br> a. 解决方法一：sudo apt-get install lsb-core但出现安装失败<br> b. 解决方法二：原因可能是64位ubuntu系统缺少某些32位包，只要装一下ia32-libs就ok了.但是,貌似从ubuntu 13.10之后就没有ia32-libs了，因此sudo apt-get install lib32stdc++6 lib32z1 lib32ncurses5 lib32bz2-1.0，但还是出现安装失败。<br>但是！此时可以输出版本信息了！于是pass</li>
+<li>ubuntu16.04安装32位交叉编译工具链的兼容包：<br>apt-get install lib32ncurses5 ​<br>apt-get install lib32z1​</li>
+<li>配置linux内核时报错curses.h: No such file or directory:<br>Sudo apt-get install libncurses5-dev libncursesw5-dev</li>
+<li>错误：error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or direcory。<br>$sudo apt-get install libstdc++6<br>$sudo apt-get install lib32stdc++6</li>
+<li>输入命令语句为：make ARCH=arm CROSS_COMPILE=arm-hisiv500-linux- uImage<br>报错信息为：<br>kernel/power/swap.c:1168:10: error: ‘RESTARTSYS’ undeclared (first use in this function)<br>return -RESTARTSYS;<br> cp arch/arn/configs/hi3518ev200_full_defconfig .config —&gt; 这句要执行好， 是3518的配置文件。<br> 如果没有拷贝成功， 则在进行menuconfig时， 没有3518ev200的一些选择项。  比如没有拷贝就执行menuconfig, 则在菜单选项，I2C 目录中没有3518 的选项。 如果 执行成功， 就有3518 I2C 的选项。</li>
+<li>编译linux kernel uImage时提示：“mkimage” command not found – U-Boot images will not be built：<br> sudo apt-get install u-boot-tools</li>
+<li>错误提示：ECHO ： not found等一系列found问题<br> 首先用whereis echo查看echo所在路径<br> 然后用export查看PATH中包含的路径<br> 发现包含无误，则修改文件第一句#！/bin/sh为#！/bin/bash即可</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2018/10/22/Opencv-Cross-Compile/" data-id="cjnjotz7u000lf08ujam6yh5r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/07/Monocular-Depth-Estimation-9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Monocular Depth Estimation 9</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/22/Opencv-Cross-Compile/">OpenCV Cross Compile</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/07/Monocular-Depth-Estimation-9/">Monocular Depth Estimation 9</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 KDQ<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
