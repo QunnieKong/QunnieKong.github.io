@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives: 2016/8 | KDQ&#39;s Blog</title>
+  <title>xrdp problem connecting | KDQ&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Time waits for no one.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="KDQ&#39;s Blog">
-<meta property="og:url" content="https://qunniekong.github.io/archives/2016/08/index.html">
+  <meta name="description" content="Linux远程桌面连接Problem Connecting问题解决起因是上周五，我美滋滋的用着远程桌面结果突然被强制退出，然后就再也登不上了，尝试了重启服务和系统、卸载再安装xrdp和vnc、新建用户、新建文件内容为allowroot=1等等许多操作之后仍然报错。主要的错误类型有两种：一种是提示problem connecting,一种是在problem connecting之前还有一句passw">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xrdp problem connecting">
+<meta property="og:url" content="https://qunniekong.github.io/2019/01/15/xrdp-problem-connecting/index.html">
 <meta property="og:site_name" content="KDQ&#39;s Blog">
-<meta property="og:description" content="Time waits for no one.">
+<meta property="og:description" content="Linux远程桌面连接Problem Connecting问题解决起因是上周五，我美滋滋的用着远程桌面结果突然被强制退出，然后就再也登不上了，尝试了重启服务和系统、卸载再安装xrdp和vnc、新建用户、新建文件内容为allowroot=1等等许多操作之后仍然报错。主要的错误类型有两种：一种是提示problem connecting,一种是在problem connecting之前还有一句passw">
 <meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2019-01-15T08:41:40.220Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KDQ&#39;s Blog">
-<meta name="twitter:description" content="Time waits for no one.">
+<meta name="twitter:title" content="xrdp problem connecting">
+<meta name="twitter:description" content="Linux远程桌面连接Problem Connecting问题解决起因是上周五，我美滋滋的用着远程桌面结果突然被强制退出，然后就再也登不上了，尝试了重启服务和系统、卸载再安装xrdp和vnc、新建用户、新建文件内容为allowroot=1等等许多操作之后仍然报错。主要的错误类型有两种：一种是提示problem connecting,一种是在problem connecting之前还有一句passw">
   
     <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
   
@@ -63,40 +65,61 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/08/14/Mobile-Web-Develope2/" class="archive-article-date">
-  <time datetime="2016-08-14T12:48:53.000Z" itemprop="datePublished">Aug 14</time>
+        <section id="main"><article id="post-xrdp-problem-connecting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/15/xrdp-problem-connecting/" class="article-date">
+  <time datetime="2019-01-15T08:21:46.000Z" itemprop="datePublished">2019-01-15</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/14/Mobile-Web-Develope2/">Mobile-Web-Develope2</a>
+    <h1 class="article-title" itemprop="name">
+      xrdp problem connecting
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Linux远程桌面连接Problem-Connecting问题解决"><a href="#Linux远程桌面连接Problem-Connecting问题解决" class="headerlink" title="Linux远程桌面连接Problem Connecting问题解决"></a>Linux远程桌面连接Problem Connecting问题解决</h3><p>起因是上周五，我美滋滋的用着远程桌面结果突然被强制退出，然后就再也登不上了，尝试了重启服务和系统、卸载再安装xrdp和vnc、新建用户、新建文件内容为allowroot=1等等许多操作之后仍然报错。<br>主要的错误类型有两种：一种是提示problem connecting,一种是在problem connecting之前还有一句password failed.两种错误我都不能接受，首先我检查了3350和5910两个端口，都处于LISTEN状态，其次我的password肯定是没有错。查看了log也没有出现任何相关错误提示。<br>错误提示如下：</p>
+<blockquote>
+<p>connecting to sesman ip 127.0.0.1 port 3350<br>sending login info to sesman<br>xrdp_mm_process_login_response: login successful for display<br>started connecting<br>connecting to 127.0.0.5910<br>tcp connected<br>security level is 2 (1 = none, 2 = standard)<br>password failed<br>error - problem connecting</p>
+</blockquote>
+<p>于是今天决定一切推翻重来，主要是用了以下几个步骤，也不知道是哪个起了作用，就都先记录如下：<br>‘’’<br>sudo apt-get update<br>sudo apt-get remove xrdp vnc4server<br>sudo apt-get install xinit<br>sudo apt-get install gdm<br>sudo apt-get install kubuntu-desktop<br>sudo apt-get install xrdp<br>sudo apt-get install vnc4server<br>echo xfce4-session &gt;~/.xsession<br>vi /etc/xrdp/startwm.sh<br>//在. /etc/X11/Xsession 前一行插入xfce4-session<br>vi /etc/xrdp/sesman.ini<br>//在末尾增加两行<br>//param8=-SecurityTypes<br>//param9=None<br>sudo service xrdp restart<br>‘’’</p>
+<p>有用的语句：<br>‘’’<br>ps -ef | grep vnc<br>sudo kill 进程<br>netstat -nltp<br>sudo adduser kkk<br>sudo userdel kkk</p>
+<p>‘’’</p>
+<p>在问题解决过程中找到的相关建议：<br><a href="https://blog.csdn.net/Blateyang/article/details/86297472" target="_blank" rel="noopener">https://blog.csdn.net/Blateyang/article/details/86297472</a><br><a href="https://blog.csdn.net/u011816696/article/details/73350931" target="_blank" rel="noopener">https://blog.csdn.net/u011816696/article/details/73350931</a><br><a href="https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4" target="_blank" rel="noopener">https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4</a><br><a href="https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746" target="_blank" rel="noopener">https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746</a><br><a href="http://www.dellts.cn/article/22.html" target="_blank" rel="noopener">http://www.dellts.cn/article/22.html</a></p>
 
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2019/01/15/xrdp-problem-connecting/" data-id="cjqxidypb000z8o8uw1rjd4yh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/22/Opencv-Cross-Compile/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OpenCV Cross Compile</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         

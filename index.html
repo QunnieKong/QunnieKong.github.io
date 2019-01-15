@@ -65,6 +65,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-xrdp-problem-connecting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/15/xrdp-problem-connecting/" class="article-date">
+  <time datetime="2019-01-15T08:21:46.000Z" itemprop="datePublished">2019-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/15/xrdp-problem-connecting/">xrdp problem connecting</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Linux远程桌面连接Problem-Connecting问题解决"><a href="#Linux远程桌面连接Problem-Connecting问题解决" class="headerlink" title="Linux远程桌面连接Problem Connecting问题解决"></a>Linux远程桌面连接Problem Connecting问题解决</h3><p>起因是上周五，我美滋滋的用着远程桌面结果突然被强制退出，然后就再也登不上了，尝试了重启服务和系统、卸载再安装xrdp和vnc、新建用户、新建文件内容为allowroot=1等等许多操作之后仍然报错。<br>主要的错误类型有两种：一种是提示problem connecting,一种是在problem connecting之前还有一句password failed.两种错误我都不能接受，首先我检查了3350和5910两个端口，都处于LISTEN状态，其次我的password肯定是没有错。查看了log也没有出现任何相关错误提示。<br>错误提示如下：</p>
+<blockquote>
+<p>connecting to sesman ip 127.0.0.1 port 3350<br>sending login info to sesman<br>xrdp_mm_process_login_response: login successful for display<br>started connecting<br>connecting to 127.0.0.5910<br>tcp connected<br>security level is 2 (1 = none, 2 = standard)<br>password failed<br>error - problem connecting</p>
+</blockquote>
+<p>于是今天决定一切推翻重来，主要是用了以下几个步骤，也不知道是哪个起了作用，就都先记录如下：<br>‘’’<br>sudo apt-get update<br>sudo apt-get remove xrdp vnc4server<br>sudo apt-get install xinit<br>sudo apt-get install gdm<br>sudo apt-get install kubuntu-desktop<br>sudo apt-get install xrdp<br>sudo apt-get install vnc4server<br>echo xfce4-session &gt;~/.xsession<br>vi /etc/xrdp/startwm.sh<br>//在. /etc/X11/Xsession 前一行插入xfce4-session<br>vi /etc/xrdp/sesman.ini<br>//在末尾增加两行<br>//param8=-SecurityTypes<br>//param9=None<br>sudo service xrdp restart<br>‘’’</p>
+<p>有用的语句：<br>‘’’<br>ps -ef | grep vnc<br>sudo kill 进程<br>netstat -nltp<br>sudo adduser kkk<br>sudo userdel kkk</p>
+<p>‘’’</p>
+<p>在问题解决过程中找到的相关建议：<br><a href="https://blog.csdn.net/Blateyang/article/details/86297472" target="_blank" rel="noopener">https://blog.csdn.net/Blateyang/article/details/86297472</a><br><a href="https://blog.csdn.net/u011816696/article/details/73350931" target="_blank" rel="noopener">https://blog.csdn.net/u011816696/article/details/73350931</a><br><a href="https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4" target="_blank" rel="noopener">https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4</a><br><a href="https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746" target="_blank" rel="noopener">https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746</a><br><a href="http://www.dellts.cn/article/22.html" target="_blank" rel="noopener">http://www.dellts.cn/article/22.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2019/01/15/xrdp-problem-connecting/" data-id="cjqxidypb000z8o8uw1rjd4yh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Opencv-Cross-Compile" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/10/22/Opencv-Cross-Compile/" class="article-date">
@@ -127,7 +173,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/10/22/Opencv-Cross-Compile/" data-id="cjnjp18oh000pp48upgf34pzq" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/10/22/Opencv-Cross-Compile/" data-id="cjqxidyp2000s8o8uftuswnvp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li></ul>
@@ -216,7 +262,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/" data-id="cjnjp18og000np48uomqk4vzl" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/" data-id="cjqxidyox000n8o8ufjztnt15" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -284,7 +330,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cjnjp18o8000lp48upr0ah04i" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cjqxidyou000l8o8udfonvte7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -354,7 +400,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cjnjp18o6000jp48u6o47xa9h" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cjqxidyop000h8o8uvgmxcud8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -426,7 +472,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjnjp18o3000hp48upojkpdxf" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjqxidyos000j8o8uw6t3qag2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -506,7 +552,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/" data-id="cjnjp18nz000fp48uxysr909z" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/" data-id="cjqxidyof000f8o8usp1mo38w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -589,7 +635,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/" data-id="cjnjp18nv000dp48ucybwvswx" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/" data-id="cjqxidyob000d8o8ui4n6bftb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -658,7 +704,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjnjp18nt000cp48uqk0ojgyb" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjqxidyo9000c8o8uvou9oz9z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -731,66 +777,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="cjnjp18nq0009p48uyr9zfic7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Monocular-Depth-Estimation-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/05/Monocular-Depth-Estimation-1/" class="article-date">
-  <time datetime="2018-02-05T08:08:07.000Z" itemprop="datePublished">2018-02-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/Monocular-Depth-Estimation-1/">Monocular Depth Estimation - 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="单目图像深度估计-1-入门篇"><a href="#单目图像深度估计-1-入门篇" class="headerlink" title="单目图像深度估计 - 1.入门篇"></a>单目图像深度估计 - 1.入门篇</h3><p>最近一直在看单目深度图像估计相关的Paper，小白入门困难多多，于是打算把看过的几篇论文和相关理论总结一下。<br>顺序如下：</p>
-<ol>
-<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">入门篇：图像深度估计相关总结</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/">应用篇：Learning to be a Depth Camera</a></li>
-<li><a href="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/">尺度篇：Make3D</a></li>
-<li><a href="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/">迁移篇：Depth Extraction from Video Using Non-parametric Sampling</a></li>
-<li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
-<li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
-<li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
-<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
-<li><a href="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/">方法比较篇：Evaluation of CNN-based Methods</a></li>
-</ol>
-<hr>
-<p>作为入门篇，这篇写的大部分是我个人的想法，脉络的话大约按照是什么，为什么和怎么做三部分进行。</p>
-<h4 id="什么是图像深度估计"><a href="#什么是图像深度估计" class="headerlink" title="什么是图像深度估计"></a>什么是图像深度估计</h4><p>顾名思义，深度估计就是从RGB图像中估计图像中物体的深度，是一个从二维到三维的艰难过程。此处的艰难是对计算机来说，而人类的视觉系统是天生的双目系统，并且通过大脑的计算可以实时生成深度信息甚至空间的三维建模。</p>
-<p>所谓双目立体视觉，即模仿人眼成像原理，在同一时刻不同位置用两台相同的设备对物体进行观测。光沿直线传播，因此同一物体在不同位置的成像可最终确定物体的真实位置。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo1.png" alt="双目立体视觉"><br>在两个相机已经校准的前提下，已知相机的光点距离、焦距和物体在画面内的水平距离等参数时，可计算得到真实距离信息。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_stereo2.png" alt="双目立体视觉计算方法"><br>双目立体视觉是目前常见的深度信息获取方法，在SLAM、智能车、体感游戏等领域都有大规模的应用。其缺点也较为明显，如硬件体积大，计算量大（图像校准），精度受限（复杂重复画面如树林影响图像校准，时间轴校准困难）等。目前常见的深度信息获取方法除双目立体视觉方法外还有结构光、TOF等方法（见下图)，但各有优缺点，比如体积大（TOF）、能耗高（Kinect配有散热系统）、受环境影响（阳光中红外线影响）、算法复杂度高、实时性差（TOF实时性最高但精度较低）等。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_method.png" alt="深度图像获取方法"></p>
-<p>由于以上基于硬件的深度获取方法还存在一定缺点，在深度学习、机器学习、人工智能飞速发展的今天，用更“智能”的方法对图像深度进行估计，弥补硬件的不足，同时为其他图像应用如语义分割、物体识别等提供更多的特征信息成了大牛们研究的方向。</p>
-<h4 id="为什么是单目图像深度估计"><a href="#为什么是单目图像深度估计" class="headerlink" title="为什么是单目图像深度估计"></a>为什么是单目图像深度估计</h4><p>无论是深度学习、机器学习还是机器视觉的目标，到目前为止仍然是：更接近人类。那么有趣的问题来了，就算我们闭上一只眼睛（神盾局长、海盗船长）仍然可以分辨物体深度。我们是怎么做到的？从眼睛的成像原理来看，人类获取到的也只是某一时刻物体的二维成像，我们没有类似深度传感器的结构，那么深度信息是什么时候附加在我们看到的画面上的？<br>因为我们的大脑利用了已有的知识：<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual1.png" alt="深度知识"><br>近大远小<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual2.png" alt="深度知识"><br>轮廓和遮挡<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth1_visual3.png" alt="深度知识"><br>消失点</p>
-<p>这些透视知识学习过绘画的人会更了解，我们的大脑总结出了这些知识和经验，并对每次观测附加相应的信息，形成了精度极高的深度估计系统，在捂住一只眼睛的情况下，也可以对深度进行相应的估计和预测。<br>很有趣吧。</p>
-<p>无论是深度学习还是机器学习，核心都是学习，我们希望机器能拥有像人脑一样的学习能力，所谓学习就是总结并利用知识和经验的能力。因此，若是能训练机器完成对单幅图像的深度估计，那么在知识的理解和运用上也是一种突破，更别提单目相比传统深度获取方法的优点（成本低，体积小，能耗低等）了。<br>并且单目图像深度估计的应用广泛，常见的有电影2D转3D，网络图片理解，3D建模，机器人，智能车等。</p>
-<h4 id="怎么进行单目图像深度估计"><a href="#怎么进行单目图像深度估计" class="headerlink" title="怎么进行单目图像深度估计"></a>怎么进行单目图像深度估计</h4><p>由于我刚刚进行这方面的研究，只看了不到10篇论文，这几篇论文的方法大致可以分为：基于深度迁移的方法，基于相对深度的方法和基于深度网络的方法三类。在之后的文章中会详细讲解每一篇论文。<br>毫无疑问，随着深度学习方法的发展，应用深度网络进行深度估计越来越成为主流的单目图像深度估计方法，但这种越来越复杂化的方法真的是正确的发展方向吗？</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="cjnjp18nn0008p48uchtkbhk7" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="cjqxidyo000088o8uqoygytm5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -820,7 +807,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
     </div>
   </div>
 
@@ -830,7 +817,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
     </div>
   </div>
 
@@ -839,7 +826,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
     </div>
   </div>
 
@@ -850,6 +837,10 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/01/15/xrdp-problem-connecting/">xrdp problem connecting</a>
+          </li>
         
           <li>
             <a href="/2018/10/22/Opencv-Cross-Compile/">OpenCV Cross Compile</a>
@@ -867,10 +858,6 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
             <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
           </li>
         
-          <li>
-            <a href="/2018/05/27/Monocular-Depth-Estimation-6/">Monocular Depth Estimation 6</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -883,7 +870,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 KDQ<br>
+      &copy; 2019 KDQ<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
