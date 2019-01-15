@@ -88,18 +88,43 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Linux远程桌面连接Problem-Connecting问题解决"><a href="#Linux远程桌面连接Problem-Connecting问题解决" class="headerlink" title="Linux远程桌面连接Problem Connecting问题解决"></a>Linux远程桌面连接Problem Connecting问题解决</h3><p>起因是上周五，我美滋滋的用着远程桌面结果突然被强制退出，然后就再也登不上了，尝试了重启服务和系统、卸载再安装xrdp和vnc、新建用户、新建文件内容为allowroot=1等等许多操作之后仍然报错。<br>主要的错误类型有两种：一种是提示problem connecting,一种是在problem connecting之前还有一句password failed.两种错误我都不能接受，首先我检查了3350和5910两个端口，都处于LISTEN状态，其次我的password肯定是没有错。查看了log也没有出现任何相关错误提示。<br>错误提示如下：</p>
-<blockquote>
-<p>connecting to sesman ip 127.0.0.1 port 3350<br>sending login info to sesman<br>xrdp_mm_process_login_response: login successful for display<br>started connecting<br>connecting to 127.0.0.5910<br>tcp connected<br>security level is 2 (1 = none, 2 = standard)<br>password failed<br>error - problem connecting</p>
-</blockquote>
-<p>于是今天决定一切推翻重来，主要是用了以下几个步骤，也不知道是哪个起了作用，就都先记录如下：<br>‘’’<br>sudo apt-get update<br>sudo apt-get remove xrdp vnc4server<br>sudo apt-get install xinit<br>sudo apt-get install gdm<br>sudo apt-get install kubuntu-desktop<br>sudo apt-get install xrdp<br>sudo apt-get install vnc4server<br>echo xfce4-session &gt;~/.xsession<br>vi /etc/xrdp/startwm.sh<br>//在. /etc/X11/Xsession 前一行插入xfce4-session<br>vi /etc/xrdp/sesman.ini<br>//在末尾增加两行<br>//param8=-SecurityTypes<br>//param9=None<br>sudo service xrdp restart<br>‘’’</p>
-<p>有用的语句：<br>‘’’<br>ps -ef | grep vnc<br>sudo kill 进程<br>netstat -nltp<br>sudo adduser kkk<br>sudo userdel kkk</p>
-<p>‘’’</p>
-<p>在问题解决过程中找到的相关建议：<br><a href="https://blog.csdn.net/Blateyang/article/details/86297472" target="_blank" rel="noopener">https://blog.csdn.net/Blateyang/article/details/86297472</a><br><a href="https://blog.csdn.net/u011816696/article/details/73350931" target="_blank" rel="noopener">https://blog.csdn.net/u011816696/article/details/73350931</a><br><a href="https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4" target="_blank" rel="noopener">https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4</a><br><a href="https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746" target="_blank" rel="noopener">https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746</a><br><a href="http://www.dellts.cn/article/22.html" target="_blank" rel="noopener">http://www.dellts.cn/article/22.html</a></p>
+<pre><code>connecting to sesman ip 127.0.0.1 port 3350
+sending login info to sesman
+xrdp_mm_process_login_response: login successful for display
+started connecting
+connecting to 127.0.0.5910
+tcp connected
+security level is 2 (1 = none, 2 = standard)
+password failed
+error - problem connecting
+</code></pre><p>于是今天决定一切推翻重来，主要是用了以下几个步骤，也不知道是哪个起了作用，就都先记录如下：</p>
+<pre><code>sudo apt-get update
+sudo apt-get remove xrdp vnc4server
+sudo apt-get install xinit
+sudo apt-get install gdm
+sudo apt-get install kubuntu-desktop
+sudo apt-get install xrdp
+sudo apt-get install vnc4server
+echo xfce4-session &gt;~/.xsession
+vi /etc/xrdp/startwm.sh
+//在. /etc/X11/Xsession 前一行插入xfce4-session
+vi /etc/xrdp/sesman.ini
+//在末尾增加两行
+//param8=-SecurityTypes
+//param9=None
+sudo service xrdp restart
+</code></pre><p>有用的语句：</p>
+<pre><code>ps -ef | grep vnc
+sudo kill 进程
+netstat -nltp
+sudo adduser kkk
+sudo userdel kkk
+</code></pre><p>在问题解决过程中找到的相关建议：<br><a href="https://blog.csdn.net/Blateyang/article/details/86297472" target="_blank" rel="noopener">https://blog.csdn.net/Blateyang/article/details/86297472</a><br><a href="https://blog.csdn.net/u011816696/article/details/73350931" target="_blank" rel="noopener">https://blog.csdn.net/u011816696/article/details/73350931</a><br><a href="https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4" target="_blank" rel="noopener">https://unix.stackexchange.com/questions/106974/windows-remote-desktop-login-failed-with-ubuntu-server-12-4</a><br><a href="https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746" target="_blank" rel="noopener">https://www.linuxquestions.org/questions/showthread.php?s=96fe980f2ffb4f61357fc3a6dd4dc9ce&amp;p=5569746</a><br><a href="http://www.dellts.cn/article/22.html" target="_blank" rel="noopener">http://www.dellts.cn/article/22.html</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2019/01/15/xrdp-problem-connecting/" data-id="cjqxidypb000z8o8uw1rjd4yh" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2019/01/15/xrdp-problem-connecting/" data-id="cjqxiiaxv000zz48uvyfy2pan" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -173,7 +198,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/10/22/Opencv-Cross-Compile/" data-id="cjqxidyp2000s8o8uftuswnvp" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/10/22/Opencv-Cross-Compile/" data-id="cjqxiiaxl000pz48uj4ckzc7u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li></ul>
@@ -262,7 +287,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/" data-id="cjqxidyox000n8o8ufjztnt15" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/" data-id="cjqxiiaxi000nz48uraa00xub" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -330,7 +355,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cjqxidyou000l8o8udfonvte7" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/" data-id="cjqxiiaxf000lz48uyouuje1k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -400,7 +425,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cjqxidyop000h8o8uvgmxcud8" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/" data-id="cjqxiiaxc000jz48u9ogfturl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -472,7 +497,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjqxidyos000j8o8uw6t3qag2" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/" data-id="cjqxiiax8000hz48uhp09k5y3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -552,7 +577,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/" data-id="cjqxidyof000f8o8usp1mo38w" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/" data-id="cjqxiiax4000fz48ua4k5vzhv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -635,7 +660,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/" data-id="cjqxidyob000d8o8ui4n6bftb" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/" data-id="cjqxiiax1000dz48ut1i3gmey" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -704,7 +729,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjqxidyo9000c8o8uvou9oz9z" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/" data-id="cjqxiiawy000cz48udgba6u4w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -777,7 +802,7 @@ set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${CUDA_TOOLKIT_ROOT_DIR})
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="cjqxidyo000088o8uqoygytm5" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="cjqxiiaws0009z48u5cyeyhxi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
