@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives: 2018/3 | KDQ&#39;s Blog</title>
+  <title>Statistical Analisys of Accuracy Improvement | KDQ&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Time waits for no one.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="KDQ&#39;s Blog">
-<meta property="og:url" content="https://qunniekong.github.io/archives/2018/03/index.html">
+  <meta name="description" content="用统计学方法检验算法对正确率的提升前两天投出的一篇Paper有了回音，Reviewer给的意见里有一条是建议对正确率的提升效果进行统计分析。以前从没解决过类似问题，特此记录一下。 其实Reviewer有相关的疑问非常可以理解，我自己也经常对论文中的结果有质疑，单纯凭正确率是感觉有些武断，这次有这个机会学习一下怎么用统计学习的方法进行检验，感觉挺有意思，记录一下。 用Excel进行T检验T检验是通过">
+<meta name="keywords" content="Statistical Analisys">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Statistical Analisys of Accuracy Improvement">
+<meta property="og:url" content="https://qunniekong.github.io/2019/10/29/Statistical-Analisys-of-Accuracy-Improvement/index.html">
 <meta property="og:site_name" content="KDQ&#39;s Blog">
-<meta property="og:description" content="Time waits for no one.">
+<meta property="og:description" content="用统计学方法检验算法对正确率的提升前两天投出的一篇Paper有了回音，Reviewer给的意见里有一条是建议对正确率的提升效果进行统计分析。以前从没解决过类似问题，特此记录一下。 其实Reviewer有相关的疑问非常可以理解，我自己也经常对论文中的结果有质疑，单纯凭正确率是感觉有些武断，这次有这个机会学习一下怎么用统计学习的方法进行检验，感觉挺有意思，记录一下。 用Excel进行T检验T检验是通过">
 <meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2019-11-08T06:24:50.115Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KDQ&#39;s Blog">
-<meta name="twitter:description" content="Time waits for no one.">
+<meta name="twitter:title" content="Statistical Analisys of Accuracy Improvement">
+<meta name="twitter:description" content="用统计学方法检验算法对正确率的提升前两天投出的一篇Paper有了回音，Reviewer给的意见里有一条是建议对正确率的提升效果进行统计分析。以前从没解决过类似问题，特此记录一下。 其实Reviewer有相关的疑问非常可以理解，我自己也经常对论文中的结果有质疑，单纯凭正确率是感觉有些武断，这次有这个机会学习一下怎么用统计学习的方法进行检验，感觉挺有意思，记录一下。 用Excel进行T检验T检验是通过">
   
     <link rel="alternate" href="/atom.xml" title="KDQ&#39;s Blog" type="application/atom+xml">
   
@@ -63,40 +65,61 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/03/06/Monocular-Depth-Estimation-4/" class="archive-article-date">
-  <time datetime="2018-03-06T03:19:36.000Z" itemprop="datePublished">Mar 6</time>
+        <section id="main"><article id="post-Statistical-Analisys-of-Accuracy-Improvement" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/29/Statistical-Analisys-of-Accuracy-Improvement/" class="article-date">
+  <time datetime="2019-10-29T09:13:42.000Z" itemprop="datePublished">2019-10-29</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/06/Monocular-Depth-Estimation-4/">Monocular Depth Estimation 4</a>
+    <h1 class="article-title" itemprop="name">
+      Statistical Analisys of Accuracy Improvement
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="用统计学方法检验算法对正确率的提升"><a href="#用统计学方法检验算法对正确率的提升" class="headerlink" title="用统计学方法检验算法对正确率的提升"></a>用统计学方法检验算法对正确率的提升</h3><p>前两天投出的一篇Paper有了回音，Reviewer给的意见里有一条是<strong>建议对正确率的提升效果进行统计分析</strong>。以前从没解决过类似问题，特此记录一下。</p>
+<p>其实Reviewer有相关的疑问非常可以理解，我自己也经常对论文中的结果有质疑，单纯凭正确率是感觉有些武断，这次有这个机会学习一下怎么用统计学习的方法进行检验，感觉挺有意思，记录一下。</p>
+<h4 id="用Excel进行T检验"><a href="#用Excel进行T检验" class="headerlink" title="用Excel进行T检验"></a>用Excel进行T检验</h4><p>T检验是通过T分布检验两组样本的差异是否显著的方法，得出的结果主要看P值，当P值较小（常取0.05或0.01）时，认为差异是显著的，反之则认为不存在显著性差异。<br>我们的实验检验的目标是改进方法对准确率的提升，因此两组数据为相同输入情况下不同算法（原始算法和改进算法）的正确率。</p>
+<p>用Excel进行T检验其实比较简单，P值的计算有以下两种方法：</p>
+<ol>
+<li>利用函数工具<br>这个方法和我们平时计算平均值、加和等操作是一样的步骤，点取表格选择TTest函数，输入Array1，Array2，单尾还是双尾，再选择一个Type参数即可（1代表成对检验，2代表双样本等方差假设，3代表双样本异方差假设），计算得到的结果就是P值；</li>
+<li>利用统计工具<br>这个方法相比直接使用函数的方法更复杂一些，但会给出一个包含均值、方差、自由度等多个数据的更详细的分析结果。<br>首先，加载数据分析工具，点击“文件”-&gt;“Excel选项”-&gt;“加载项”选项卡，将“分析工具库”添加到活动应用程序加载项中。<br>然后返回表单，选择“数据”-&gt;最右侧的“数据分析”按钮-&gt;T检验即可。</li>
+</ol>
 
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2019/10/29/Statistical-Analisys-of-Accuracy-Improvement/" data-id="ck2u1i5060012948uk4snqecb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Statistical-Analisys/">Statistical Analisys</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/15/xrdp-problem-connecting/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">xrdp problem connecting</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         

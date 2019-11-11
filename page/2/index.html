@@ -65,6 +65,79 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Monocular-Depth-Estimation-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/07/Monocular-Depth-Estimation-2/" class="article-date">
+  <time datetime="2018-02-07T02:27:41.000Z" itemprop="datePublished">2018-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/07/Monocular-Depth-Estimation-2/">Monocular Depth Estimation 2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><a href="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/">入门篇：图像深度估计相关总结</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/">应用篇：Learning to be a Depth Camera</a></li>
+<li><a href="https://qunniekong.github.io/2018/02/22/Monocular-Depth-Estimation-3/">尺度篇：Make3D</a></li>
+<li><a href="https://qunniekong.github.io/2018/03/06/Monocular-Depth-Estimation-4/">迁移篇：Depth Extraction from Video Using Non-parametric Sampling</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/22/Monocular-Depth-Estimation-5/">深度篇：David Eigen</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/27/Monocular-Depth-Estimation-6/">无监督篇：Left-Right Consistency &amp; Ego Motion</a></li>
+<li><a href="https://qunniekong.github.io/2018/05/28/Monocular-Depth-Estimation-7/">相对深度篇：Depth in the Wild &amp; Size to Depth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/05/Monocular-Depth-Estimation-8/">SLAM辅助篇：MegaDepth</a></li>
+<li><a href="https://qunniekong.github.io/2018/06/07/Monocular-Depth-Estimation-9/">方法比较篇：Evaluation of CNN-based Methods</a></li>
+</ol>
+<hr>
+<h3 id="单目图像深度估计-2-应用篇：Learning-to-be-a-Depth-Camera"><a href="#单目图像深度估计-2-应用篇：Learning-to-be-a-Depth-Camera" class="headerlink" title="单目图像深度估计 - 2. 应用篇：Learning to be a Depth Camera"></a>单目图像深度估计 - 2. 应用篇：Learning to be a Depth Camera</h3><p><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth2_paper1.png" alt="Learning to be a Depth Camera"><br>Fig. 1 Learning to be a Depth Camera</p>
+<p>第二篇借助Learning to be a Depth Camera for Close-Range Human Capture and Interaction（<a href="https://www.microsoft.com/en-us/research/publication/learning-to-be-a-depth-camera-for-close-range-human-capture-and-interaction/?from=http%3A%2F%2Fresearch.microsoft.com%2Fapps%2Fpubs%2Fdefault.aspx%3Fid%3D220845" target="_blank" rel="noopener">Website</a>）这篇论文谈一下相关应用。</p>
+<p>上篇文章中提到过，有了深度信息后，图片就从二维变成了三维，机器对图像的理解成几何倍数的增长，自然利用这更多的信息可以做到更多的事情。<br>当机器人可以实时获取空间的三维信息，当人机交互只需要手势和表情，当智能汽车可以实时推断周围物体距离……</p>
+<p>Learning to be a Depth Camera这篇论文提供了一种把普通摄像头改造成深度摄像头的方法，结合<strong>硬件的改造</strong>和<strong>机器学习算法</strong>推断可实时获取近距离物体的深度信息。在论文配套的<strong><a href="https://dl.acm.org/citation.cfm?id=2601185&amp;dl=ACM&amp;coll=DL" target="_blank" rel="noopener">视频</a></strong>中展示了多种应用，如人脸3D建模，手势识别等。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth2_paper4.png" alt="Learning to be a Depth Camera"><br>Fig. 2 不同应用场景<br>之所以把这篇叫做应用篇，也是因为在视频中给出的应用场景非常丰富，并且能够直观的深度信息看出在人机交互和3D建模方面的重要性。</p>
+<h4 id="硬件改造部分"><a href="#硬件改造部分" class="headerlink" title="硬件改造部分"></a>硬件改造部分</h4><p>文中对两种摄像头进行了改造，分别是普通的电脑外接摄像头Microsoft LifeCam(Fig.1 d)和Nexus手机摄像头(Fig.1 c)。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth2_paper2.png" alt="Camera"><br>Fig. 3 摄像头改造步骤<br>如上图，改造的步骤为：</p>
+<ol>
+<li>去掉相机原有的近红外滤光片(NIR cut filter)</li>
+<li>增加一个带通滤波片(bandpass filter)</li>
+<li>增加一圈红色LED光源<br>其中带通滤波片带宽和新增的LED光源波长均为850nm。<br>在视频中有详细的改造过程，但此处值得注意的是，目前手机相机镜头可能不是单独的带通滤波片结构，而是一层滤波涂层，因此效果可能会打折。<br>这种改造的目的是让原本不能感知近红外的镜头对特定波长的近红外光波敏感，改造后的相机输出结果不再为彩色RGB图片。</li>
+</ol>
+<h4 id="深度估计算法部分"><a href="#深度估计算法部分" class="headerlink" title="深度估计算法部分"></a>深度估计算法部分</h4><p>文章使用机器学习的方法对深度信息进行估计。<br><img src="https://raw.githubusercontent.com/QunnieKong/UsefullCodePics/master/HexoPics/depth2_paper3.png" alt="Multi-layer decision forest"><br>Fig. 4 多层决策森林<br>Fig.4为文章进行深度估计使用的多层决策森林结构，输入为一个红外图像的像素点，输出为深度距离值。网络为两层结构，第一层为分类森林，第二层为回归森林。为了让预测过程更有效率，文章限制了目标物体的距离范围(20cm到1m)。<br>如图所示，Layer1为每一个像素分配一块对应的深度范围（每一个叶子节点表示一个深度范围），并且生成整幅图片的预测深度概率分布（计算分别属于c个叶子的概率）。由于叶子节点的输出并不是具体的深度值，且输出中有全局概率分布，因此第一层可理解为全局的粗略深度估计。<br>此处插播一句，深度特征不同于其他特征的地方有一点就在于深度信息是全局性的，是一种相对的值，人类也会通过相对距离来判断深度，因此大多数深度估计方法都采用一种由粗到细由全局到局部的预测过程，典型的例子就是多尺度深度网络。</p>
+<p>Layer2针对layer1的c种分类结果，训练了c个对应的专家树，每一个专家树都由属于此范围的train集进行训练得到。通过激活不同的专家树，并赋予每个（被激活的专家树的）预测结果对应的权重（权重由Layer1给的概率分布决定），获得每个像素点最终的深度预测值。第二层的输出是mm单位的连续深度预测值。<br>值得注意的是，论文中提到可以使用Kinect获得的真实深度数据对模型进行训练，在应用时使用改造后的摄像头数据，也可以实时产生令人满意的效果。</p>
+<p>由于决策树这块我还没吃透，再此不对训练过程做详细说明，大致是通过最大化信息增益得到每个节点的判断阈值的过程。实验对比部分也一并略过。</p>
+<h4 id="不足及展望部分"><a href="#不足及展望部分" class="headerlink" title="不足及展望部分"></a>不足及展望部分</h4><p>本文提出的方法软硬结合的解决了单目摄像头深度估计问题，优点有成本低廉，实时性强，不需要手动提取特征等，缺点有如下几点：</p>
+<ol>
+<li>不适用于表面介质不同的物体。文中作对比的SFS方法是基于物体的反射特等物理特性进行深度推测的方法，因此作者强调了此种方法只适用于均一介质的人的皮肤，在视频中也有对塑料模型建模失败的效果展示。</li>
+<li>需要大量覆盖不同情况的train set。这可能是机器学习和深度学习方法的通病了，过于依赖train集，如用室外数据集KITTI训练得到的深度网络在室内数据集NYU_Depth上的表现往往不尽如人意。</li>
+<li>只能探测近距离的物体。由于对距离进行了限制（20cm到1m），但也正是因此可以忽略背景的干扰降低了算法复杂度，更适合于人机交互的应用。</li>
+</ol>
+<p>作者也提出了可以改进的方向，如利用已有可直接获取红外值的Camera(Omni Vision)获取更精确的结果。</p>
+<h4 id="总结和思考"><a href="#总结和思考" class="headerlink" title="总结和思考"></a>总结和思考</h4><p>这篇文章值得学习的地方有很多，比如引人入胜的视频，通过视频可以看出作者团队做了多少工作；比如丰富的实验，不仅仅横向与其他算法对比，而且与不同的训练方式对比，同时在论文的结尾还对手部区域分类的应用进行了详细的实验说明；比如软硬结合的方法，在工业应用上这篇文章比其他单独对算法进行改进的论文无疑更有实用价值。</p>
+<p>最近一直在思考论文的价值，是发表了论文就算有价值吗？为了提高百分之零点几的正确率让算法变得更加复杂真的是正确的研究方向吗？我个人还是比较喜欢简洁的方法，简洁即优雅，就像Science上的CFSFDP一样，提出全新的思路和方向的论文对我来说更有意思一些。<br>以上。</p>
+<p>[1] Fanello S R, Keskin C, Izadi S, et al. Learning to be a depth camera for close-range human capture and interaction[J]. Acm Transactions on Graphics, 2014, 33(4):1-11.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://qunniekong.github.io/2018/02/07/Monocular-Depth-Estimation-2/" data-id="ck2u1i4z5000h948uayu4ljnx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Monocular-Depth-Estimation-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/02/05/Monocular-Depth-Estimation-1/" class="article-date">
@@ -112,7 +185,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="cjqxiiawp0008z48uelvbugg0" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/02/05/Monocular-Depth-Estimation-1/" data-id="ck2u1i4y50004948uij61n5xz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li></ul>
@@ -173,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/" data-id="cjqxiiaxn000sz48u822vftpd" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2018/01/02/SSH-for-Windows/" data-id="ck2u1i5030010948ui1hmpsn0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li></ul>
@@ -284,7 +357,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="cjqxiiawf0003z48uz80xrua8" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/12/26/Install-OpenCV-on-Raspberry-Pi/" data-id="ck2u1i4xw0001948uuqgrevgy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li></ul>
@@ -353,7 +426,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/12/13/Tensorflow-Install-With-Anaconda/" data-id="cjqxiiaxt000xz48u40n4kp98" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/12/13/Tensorflow-Install-With-Anaconda/" data-id="ck2u1i50b0014948uo1kevqnt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
@@ -435,7 +508,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/" data-id="cjqxiiaxq000uz48u5b2lrfpa" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2017/11/24/TensorFlow-Install/" data-id="ck2u1i501000y948uqpsyyvgj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
@@ -487,7 +560,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="cjqxiiawi0004z48u02oggqcs" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/08/14/Mobile-Web-Develope2/" data-id="ck2u1i4y70005948u6sx2qicj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
@@ -539,7 +612,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="cjqxiiawk0005z48u703rvchr" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/27/Mobile-Web-Develope/" data-id="ck2u1i4y30003948uz5dn7pjt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
@@ -591,7 +664,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="cjqxiiaw90001z48uxx0us8xd" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/09/Hexo-Blog/" data-id="ck2u1i4yb0008948u8l4865sg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
@@ -646,7 +719,7 @@ export http_proxy no_proxy
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="cjqxiiaw00000z48uf8hdlupy" class="article-share-link">Share</a>
+      <a data-url="https://qunniekong.github.io/2016/07/09/Deploy-Blog/" data-id="ck2u1i4xm0000948u94yd47zn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog相关/">Blog相关</a></li></ul>
@@ -676,7 +749,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog相关/">Blog相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monocular-Depth-Estimation/">Monocular Depth Estimation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Statistical-Analisys/">Statistical Analisys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动端开发/">移动端开发</a></li></ul>
     </div>
   </div>
 
@@ -686,7 +759,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
+      <a href="/tags/Blog相关/" style="font-size: 15px;">Blog相关</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Monocular-Depth-Estimation/" style="font-size: 20px;">Monocular Depth Estimation</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Statistical-Analisys/" style="font-size: 10px;">Statistical Analisys</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/移动端开发/" style="font-size: 15px;">移动端开发</a>
     </div>
   </div>
 
@@ -695,7 +768,7 @@ export http_proxy no_proxy
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li></ul>
     </div>
   </div>
 
@@ -706,6 +779,10 @@ export http_proxy no_proxy
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/10/29/Statistical-Analisys-of-Accuracy-Improvement/">Statistical Analisys of Accuracy Improvement</a>
+          </li>
         
           <li>
             <a href="/2019/01/15/xrdp-problem-connecting/">xrdp problem connecting</a>
@@ -721,10 +798,6 @@ export http_proxy no_proxy
         
           <li>
             <a href="/2018/06/05/Monocular-Depth-Estimation-8/">Monocular Depth Estimation 8</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/28/Monocular-Depth-Estimation-7/">Monocular Depth Estimation 7</a>
           </li>
         
       </ul>
